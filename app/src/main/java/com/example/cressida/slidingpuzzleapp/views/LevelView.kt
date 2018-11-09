@@ -22,6 +22,6 @@ class LevelView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         val widthStep = width / NUMBER_OF_COLUMNS
         val heightStep = height / NUMBER_OF_ROWS
     }
-    push up this shit
+
 
 }
