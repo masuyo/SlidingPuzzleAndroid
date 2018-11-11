@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "227438631225",
+    "firebase_url": "https://slidingpuzzle-ab769.firebaseio.com",
+    "project_id": "slidingpuzzle-ab769",
+    "storage_bucket": "slidingpuzzle-ab769.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227438631225:android:7add8acc0d250a01",
+        "android_client_info": {
+          "package_name": "com.example.cressida.slidingpuzzleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227438631225-5pg0u0jnr9v1keevsqelkl5bfs9p3gao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVCRz9D17D_J-71DXOmOsA-OzwKkHo20A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
