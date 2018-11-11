@@ -7,13 +7,15 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.logic.Block
 
-class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0): View(context, attributeSet, defstyleAttr) {
+class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
 
     private val ROWS = 6
     private val COLUMNS = 6
     private val BLOCKSNUM = 3
-    private val ROWHEIGHT = (height / ROWS).toInt()
-    private val ROWWIDTH = (width / COLUMNS).toInt()
+
+    // TODO: get actual height and width before rendering, fuck this
+    private val ROWHEIGHT = (600 / ROWS).toInt()
+    private val ROWWIDTH = (600 / COLUMNS).toInt()
 
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
@@ -21,6 +23,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private val blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
+    private val rectColors = ArrayList<Paint?>()
 
     init {
 
@@ -37,35 +40,35 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
         // TODO: draw a level using a matrix
         for (i in 0 until BLOCKSNUM) {
-            canvas?.drawRect(blockRects[i], bluePaint)
+            canvas!!.drawRect(blockRects[i], rectColors[i])
         }
     }
 
-   /* override fun onTouchEvent(event: MotionEvent?): Boolean {
+    /* override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-        var touchX = event?.x
-        var touchY = event?.y
+         var touchX = event?.x
+         var touchY = event?.y
 
-        when(event?.action) {
-            MotionEvent.ACTION_DOWN -> true
-            // user pressed - move the block
-            // get coordinates of the block
-            MotionEvent.ACTION_UP -> true
-            // user released - new block location
-            // add change to the coordinates of the block
-            MotionEvent.ACTION_MOVE -> true
-            // user moved his finger - direction
-            // calculate the change
-            MotionEvent.ACTION_OUTSIDE -> true
-            // occurred outside bounds of current screen element
-            // do nothing
-            else -> super.onTouchEvent(event)
-            // do nothing
-        }
+         when(event?.action) {
+             MotionEvent.ACTION_DOWN -> true
+             // user pressed - move the block
+             // get coordinates of the block
+             MotionEvent.ACTION_UP -> true
+             // user released - new block location
+             // add change to the coordinates of the block
+             MotionEvent.ACTION_MOVE -> true
+             // user moved his finger - direction
+             // calculate the change
+             MotionEvent.ACTION_OUTSIDE -> true
+             // occurred outside bounds of current screen element
+             // do nothing
+             else -> super.onTouchEvent(event)
+             // do nothing
+         }
 
-        invalidate()
-        return true // event handled
-    }*/
+         invalidate()
+         return true // event handled
+     }*/
 
     private fun generateRectsFromBlocks() {
 
@@ -97,7 +100,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
             }
             rect = Rect(left, top, right, bottom)
-            blockRects.add(rect)
+            blockRects!!.add(rect)
         }
     }
 
@@ -107,6 +110,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         bluePaint = Paint()
         greenPaint = Paint()
 
+
         purplePaint?.color = Color.MAGENTA
         bluePaint?.color = Color.BLUE
         greenPaint?.color = Color.GREEN
@@ -114,6 +118,10 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         purplePaint?.isAntiAlias = true
         bluePaint?.isAntiAlias = true
         greenPaint?.isAntiAlias = true
+
+        rectColors.add(purplePaint)
+        rectColors.add(bluePaint)
+        rectColors.add(greenPaint)
 
     }
 
