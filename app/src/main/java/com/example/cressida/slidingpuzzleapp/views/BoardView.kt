@@ -12,10 +12,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val ROWS = 6
     private val COLUMNS = 6
     private val BLOCKSNUM = 3
-    private val ROWHEIGHT = height / ROWS
-    private val ROWWIDTH = width / COLUMNS
+    private val ROWHEIGHT = (height / ROWS).toInt()
+    private val ROWWIDTH = (width / COLUMNS).toInt()
 
-    private var block: Path? = null
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
     private var greenPaint: Paint? = null
@@ -37,10 +36,12 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         super.onDraw(canvas)
 
         // TODO: draw a level using a matrix
-        canvas?.drawPath(block, bluePaint)
+        for (i in 0 until BLOCKSNUM) {
+            canvas?.drawRect(blockRects[i], bluePaint)
+        }
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
+   /* override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         var touchX = event?.x
         var touchY = event?.y
@@ -64,7 +65,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
         invalidate()
         return true // event handled
-    }
+    }*/
 
     private fun generateRectsFromBlocks() {
 
@@ -83,9 +84,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             if (!block.vertical) {
 
                 left = block.x * ROWWIDTH // X coordinate of the left side of the rectangle
-                top = block.y * ROWHEIGHT // Y coordinate of the top of the rectangle
+                top = (block.y + 1) * ROWHEIGHT // Y coordinate of the top of the rectangle
                 right = (block.x + block.size) * ROWWIDTH // The X coordinate of the right side of the rectangle
-                bottom = (block.y - 1)* ROWHEIGHT // Y coordinate of the bottom of the rectangle
+                bottom = block.y * ROWHEIGHT // Y coordinate of the bottom of the rectangle
 
             } else {
 
