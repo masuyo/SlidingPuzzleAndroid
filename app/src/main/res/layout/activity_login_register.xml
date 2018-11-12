@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginRegisterActivity">
+    tools:context=".LoginRegisterActivity"
+    android:background="#D99754"
+    >
 
     <EditText
         android:id="@+id/email"
@@ -42,7 +44,9 @@
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        android:background="#ffffff"
+        android:textColor="#C96909"/>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/register_button"
@@ -54,6 +58,8 @@
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        android:background="#ffffff"
+        android:textColor="#C96909"/>
 
 </android.support.constraint.ConstraintLayout>
