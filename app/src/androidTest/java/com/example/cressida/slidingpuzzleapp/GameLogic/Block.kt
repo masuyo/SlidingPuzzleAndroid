@@ -7,12 +7,12 @@ class Block {
     var y: Int = 0
     var size:Int = -1
     var vertical:Boolean = false
-    constructor(X:Int,Y:Int,Size:Int,Vertikal:Boolean)
+    constructor(X:Int,Y:Int,Size:Int,Vertical:Boolean)
     {
         x=X
         y=Y
         size = Size
-        vertical=Vertikal
+        vertical=Vertical
     }
     constructor()
 }
