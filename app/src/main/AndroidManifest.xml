@@ -20,6 +20,7 @@
             android:name=".LoginRegisterActivity"
             android:label="@string/title_activity_login_register"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <uses-permission android:name="android.permission.INTERNET" />
     </application>
 
 </manifest>

@@ -5,8 +5,8 @@ import android.view.View.Y
 
 class Block {
 
-    var cordinateX = 0 //konstruktorbe megjeleni
-    var cordinatey = 0 //konstuktorba megjeleni
+    var cordinateX = 0
+    var cordinatey = 0
     var x:Int = 0
     var y: Int = 0
     var size:Int = -1
