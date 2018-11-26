@@ -1,4 +1,4 @@
-package com.example.cressida.slidingpuzzleapp.GameLogic
+package com.example.cressida.slidingpuzzleapp.logic
 
 import kotlin.properties.Delegates
 
@@ -16,16 +16,16 @@ class Board {
     var actualStep: Int = 0
     private var minedge: Int = 0
     private var maxedge: Int = 0
-    private var table: ArrayList<Block> = ArrayList()
+    private var table: ArrayList<com.example.cressida.slidingpuzzleapp.logic.Block> = ArrayList()
     private val pruposex = 5
-    private val finiser: Block=Block(0,3,2,false)
-    private var target: Block= Block()
+    private val finiser: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block(0, 3, 2, false)
+    private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
     fun loadMap()
     {
         IsEnded = false
         table.add(finiser)
         minStep = 2
-        table.add(Block(3,3,3,true))
+        table.add(com.example.cressida.slidingpuzzleapp.logic.Block(3, 3, 3, true))
         setSize(size)
     }
     fun setSize(Size:Int )
@@ -34,8 +34,8 @@ class Board {
         sizerect = Size/6
         for ( i in 0 until table.size )
         {
-            table[i].cordinatex = table[i].x * sizerect
-            table[i].cordinatey = table[i].y * sizerect
+            table[i].cordinateX = table[i].x * sizerect
+            table[i].cordinateY = table[i].y * sizerect
         }
     }
     private fun isEnded()
@@ -45,7 +45,7 @@ class Board {
             IsEnded = false
         }
     }
-    private  fun elementontablepoint(x: Int,y: Int): Block
+    private  fun elementontablepoint(x: Int,y: Int): com.example.cressida.slidingpuzzleapp.logic.Block
     {
         for ( i in 0 until table.size )
         {
@@ -60,9 +60,9 @@ class Board {
                     return table[i]
             }
         }
-        return Block()
+        return com.example.cressida.slidingpuzzleapp.logic.Block()
     }
-    private fun elementInCordinate(x:Int,y:Int) : Block {
+    private fun elementInCordinate(x:Int,y:Int) : com.example.cressida.slidingpuzzleapp.logic.Block {
         val xp = x/sizerect
         val xy = y/sizerect
         return elementontablepoint(xp,xy)
@@ -71,9 +71,9 @@ class Board {
     fun finishTheMove() {
         if (target.size != -1)
         {
-            target.x= target.cordinatex/sizerect //pontositani ha van már alap megjelenités
-            target.y = target.cordinatey/sizerect
-            target=Block()
+            target.x= target.cordinateX/sizerect //pontositani ha van már alap megjelenités
+            target.y = target.cordinateY/sizerect
+            target= com.example.cressida.slidingpuzzleapp.logic.Block()
             actualStep++
             //megjelenités modositása
             isEnded()
@@ -138,33 +138,33 @@ class Board {
         }
         if (target.size != -1){//mozgatás
             if (target.vertical) {//y irányú ág
-                val newy = target.cordinatey + DistanceY
+                val newy = target.cordinateY + DistanceY
                 if ( DistanceY > 0){//lefele mozog méret
                     if (maxedge > newy + target.size*sizerect){//nem megy túl az útolsó szabad pozición ameddig elcsuszhat
-                        target.cordinatey = newy
+                        target.cordinateY = newy
                     }else{
-                        target.cordinatey = maxedge - target.size*sizerect
+                        target.cordinateY = maxedge - target.size*sizerect
                     }
                 }else{//felfele mozog
                     if (minedge < newy){//nem megy túl az útolsó szabad pozición ameddig elcsuszhat
-                        target.cordinatey = newy
+                        target.cordinateY = newy
                     }else{
-                        target.cordinatey = minedge
+                        target.cordinateY = minedge
                     }
                 }
             }else{//x irányú ág
-                val newx = target.cordinatex + DistanceX
+                val newx = target.cordinateX + DistanceX
                 if ( DistanceX > 0){//jobbra mozog
                     if (maxedge > newx + target.size*sizerect){//nem megy túl az útolsó szabad pozición ameddig elcsuszhat
-                        target.cordinatex = newx
+                        target.cordinateX = newx
                     }else{
-                        target.cordinatex = maxedge - target.size*sizerect
+                        target.cordinateX = maxedge - target.size*sizerect
                     }
                 }else{//felfele mozog
                     if (minedge > newx){//nem megy túl az útolsó szabad pozición ameddig elcsuszhat
-                        target.cordinatex = newx
+                        target.cordinateX = newx
                     }else{
-                        target.cordinatex = minedge
+                        target.cordinateX = minedge
                     }
                 }
             }
