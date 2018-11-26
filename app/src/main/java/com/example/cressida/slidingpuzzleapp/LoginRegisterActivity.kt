@@ -17,8 +17,6 @@ import kotlinx.android.synthetic.main.activity_login_register.*
 
 class LoginRegisterActivity : Activity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_register)
@@ -30,8 +28,4 @@ class LoginRegisterActivity : Activity() {
         login_button.setOnClickListener { fireAuth.loginUser(email.text.toString(), password.text.toString()) }
         register_button.setOnClickListener { fireAuth.registerUser(email.text.toString(), password.text.toString()) }
     }
-
-
-
-
 }

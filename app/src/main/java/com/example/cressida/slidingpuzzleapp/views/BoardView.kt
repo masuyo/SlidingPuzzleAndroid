@@ -1,9 +1,11 @@
 package com.example.cressida.slidingpuzzleapp.views
 
+import android.app.Activity
 import android.view.View
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.logic.Block
 
@@ -12,10 +14,13 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val ROWS = 6
     private val COLUMNS = 6
     private val BLOCKSNUM = 3
+    private val scale = resources.displayMetrics.density;
 
-    // TODO: get actual height and width before rendering, fuck this
-    private val ROWHEIGHT = (600 / ROWS).toInt()
-    private val ROWWIDTH = (600 / COLUMNS).toInt()
+    private val height = 150 * scale
+    private val width = 150 * scale
+
+    private val ROWHEIGHT = (height / ROWS).toInt()
+    private val ROWWIDTH = (width / COLUMNS).toInt()
 
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
@@ -35,40 +40,50 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         generateColorsForRects()
     }
 
+/*    // preserve a squared ratio
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width = measuredWidth
+        setMeasuredDimension(width, width)
+
+    }*/
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        // TODO: draw a level using a matrix
+
+        canvas!!.drawColor(Color.BLACK)
         for (i in 0 until BLOCKSNUM) {
             canvas!!.drawRect(blockRects[i], rectColors[i])
         }
     }
 
-    /* override fun onTouchEvent(event: MotionEvent?): Boolean {
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-         var touchX = event?.x
-         var touchY = event?.y
+        var touchX = event?.x
+        var touchY = event?.y
 
-         when(event?.action) {
-             MotionEvent.ACTION_DOWN -> true
-             // user pressed - move the block
-             // get coordinates of the block
-             MotionEvent.ACTION_UP -> true
-             // user released - new block location
-             // add change to the coordinates of the block
-             MotionEvent.ACTION_MOVE -> true
-             // user moved his finger - direction
-             // calculate the change
-             MotionEvent.ACTION_OUTSIDE -> true
-             // occurred outside bounds of current screen element
-             // do nothing
-             else -> super.onTouchEvent(event)
-             // do nothing
-         }
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> blocksDummy[0].x = 3
+        // user pressed - move the block
+        // get coordinates of the block
+            MotionEvent.ACTION_UP -> blocksDummy[0].x = 3
+        // user released - new block location
+        // add change to the coordinates of the block
+            MotionEvent.ACTION_MOVE -> blocksDummy[0].x = 3
+        // user moved his finger - direction
+        // calculate the change
 
-         invalidate()
-         return true // event handled
-     }*/
+            MotionEvent.ACTION_OUTSIDE -> blocksDummy[0].x = 3
+        // occurred outside bounds of current screen element
+        // do nothing*/
+            else -> super.onTouchEvent(event)
+        // do nothing
+        }
+
+        invalidate()
+        return true // event handled
+    }
 
     private fun generateRectsFromBlocks() {
 
