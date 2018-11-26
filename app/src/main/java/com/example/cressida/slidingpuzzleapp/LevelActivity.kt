@@ -1,20 +1,17 @@
 package com.example.cressida.slidingpuzzleapp
 
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
-import android.view.TouchDelegate
-import android.view.View
 import com.example.cressida.slidingpuzzleapp.views.BoardView
 
-class MainActivity : AppCompatActivity() {
+class LevelActivity : AppCompatActivity() {
 
-    //private var myLayout:BoardView = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_level)
+        val view = findViewById<BoardView>(R.id.board_view)
 
 
 

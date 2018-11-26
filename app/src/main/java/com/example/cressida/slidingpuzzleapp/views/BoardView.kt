@@ -14,7 +14,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val ROWS = 6
     private val COLUMNS = 6
     private val BLOCKSNUM = 3
-    private val scale = resources.displayMetrics.density;
+    private val scale = resources.displayMetrics.density*2;
 
     private val height = 150 * scale
     private val width = 150 * scale
@@ -40,62 +40,72 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         generateColorsForRects()
     }
 
-/*    // preserve a squared ratio
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = measuredWidth
-        setMeasuredDimension(width, width)
-
-    }*/
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-
-        canvas!!.drawColor(Color.BLACK)
-        for (i in 0 until BLOCKSNUM) {
-            canvas!!.drawRect(blockRects[i], rectColors[i])
-        }
-    }
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         var touchX = event?.x
         var touchY = event?.y
+        var rectIndex = 0
+        var touching: Boolean = false
 
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                blocksDummy[0].x = 3
-                invalidate()
+                rectIndex = getRectIndexFor(touchX!!.toFloat(), touchY!!.toFloat())
+                touching = true
+                invalidate(blockRects[rectIndex])
             }
 
         // user pressed - move the block
         // get coordinates of the block
             MotionEvent.ACTION_UP -> {
-                blocksDummy[0].x = 3
-                invalidate()
+                touching = false
+                invalidate(blockRects[rectIndex])
             }
         // user released - new block location
         // add change to the coordinates of the block
-            MotionEvent.ACTION_MOVE -> {
+/*            MotionEvent.ACTION_MOVE -> {
                 blocksDummy[0].x = 3
+                generateRectsFromBlocks()
                 invalidate()
-            }
+            }*/
         // user moved his finger - direction
         // calculate the change
 
-            MotionEvent.ACTION_OUTSIDE -> {
+/*            MotionEvent.ACTION_OUTSIDE -> {
                 blocksDummy[0].x = 3
+                generateRectsFromBlocks()
                 invalidate()
-            }
+            }*/
         // occurred outside bounds of current screen element
         // do nothing*/
             else -> super.onTouchEvent(event)
         // do nothing
         }
 
-        invalidate()
         return true // event handled
+    }
+
+
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        canvas!!.drawColor(Color.BLACK)
+        DrawBlocks(canvas)
+    }
+
+    private fun DrawBlocks(canvas: Canvas) {
+        for (i in 0 until BLOCKSNUM) {
+            canvas!!.drawRect(blockRects[i], rectColors[i])
+        }
+    }
+
+    fun getRectIndexFor(x: Float, y: Float): Int {
+        for (i in 0 until 3) {
+            if (blockRects[i].contains(x.toInt(), y.toInt())) {
+                return i
+            }
+        }
+        return -1 // x, y do not lie in our view
     }
 
     private fun generateRectsFromBlocks() {
@@ -128,8 +138,10 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
             }
             rect = Rect(left, top, right, bottom)
+
             blockRects!!.add(rect)
         }
+
     }
 
     private fun generateColorsForRects() {
@@ -153,4 +165,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     }
 
+    // preserve a squared ratio
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width = measuredWidth
+        setMeasuredDimension(width, width)
+
+    }
 }
