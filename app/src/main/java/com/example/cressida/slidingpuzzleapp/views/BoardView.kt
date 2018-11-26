@@ -64,17 +64,30 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         var touchY = event?.y
 
         when (event?.action) {
-            MotionEvent.ACTION_DOWN -> blocksDummy[0].x = 3
+            MotionEvent.ACTION_DOWN -> {
+                blocksDummy[0].x = 3
+                invalidate()
+            }
+
         // user pressed - move the block
         // get coordinates of the block
-            MotionEvent.ACTION_UP -> blocksDummy[0].x = 3
+            MotionEvent.ACTION_UP -> {
+                blocksDummy[0].x = 3
+                invalidate()
+            }
         // user released - new block location
         // add change to the coordinates of the block
-            MotionEvent.ACTION_MOVE -> blocksDummy[0].x = 3
+            MotionEvent.ACTION_MOVE -> {
+                blocksDummy[0].x = 3
+                invalidate()
+            }
         // user moved his finger - direction
         // calculate the change
 
-            MotionEvent.ACTION_OUTSIDE -> blocksDummy[0].x = 3
+            MotionEvent.ACTION_OUTSIDE -> {
+                blocksDummy[0].x = 3
+                invalidate()
+            }
         // occurred outside bounds of current screen element
         // do nothing*/
             else -> super.onTouchEvent(event)
