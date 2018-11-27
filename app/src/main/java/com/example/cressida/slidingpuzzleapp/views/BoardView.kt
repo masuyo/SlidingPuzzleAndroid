@@ -158,7 +158,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 bottom = block.y * ROWHEIGHT
 
             }
-            rect = Rect(left, top, right, bottom)
+            rect = Rect(left, bottom, right, top)
 
             blockRects!!.add(rect)
         }
