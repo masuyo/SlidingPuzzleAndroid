@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.logic.Block
 
@@ -40,23 +41,33 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         generateColorsForRects()
     }
 
+    private var initialX:Float = ROWS.toFloat()
+    private var initialY:Float = ROWS.toFloat()
+    val TAG:String = this::class.java.simpleName
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-        var touchX = event?.x
-        var touchY = event?.y
+
         var rectIndex = 0
         var touching: Boolean = false
 
+
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                rectIndex = getRectIndexFor(touchX!!.toFloat(), touchY!!.toFloat())
+                initialX = event.x
+                initialY = event.y
+                rectIndex = getRectIndexFor(initialX!!.toFloat(), initialY!!.toFloat())
                 touching = true
+                Log.d(TAG, ("DOWN: x: $initialX, y: $initialY"))
                 invalidate(blockRects[rectIndex])
+
             }
 
         // user pressed - move the block
         // get coordinates of the block
             MotionEvent.ACTION_UP -> {
+                var finalX = event.x
+                var finalY = event.y
                 touching = false
                 invalidate(blockRects[rectIndex])
             }
@@ -100,10 +111,20 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     }
 
     fun getRectIndexFor(x: Float, y: Float): Int {
+        var xint = x.toInt()
+        var yint = y.toInt()
+        Log.d(TAG, ("Coordinates in int: x: $xint, y: $yint"))
         for (i in 0 until 3) {
-            if (blockRects[i].contains(x.toInt(), y.toInt())) {
+            var cont = blockRects[i].contains(x.toInt(), y.toInt())
+            if (cont) {
+
                 return i
             }
+            var left = blockRects[i].left
+            var top = blockRects[i].top
+            var right = blockRects[i].right
+            var bottom = blockRects[i].bottom
+            Log.d(TAG, ("$i RECTDOWN: Left: $left, Top: $top, Right: $right, Bottom: $bottom, Contains: $cont"))
         }
         return -1 // x, y do not lie in our view
     }
@@ -165,11 +186,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     }
 
-    // preserve a squared ratio
+/*    // preserve a squared ratio
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val width = measuredWidth
         setMeasuredDimension(width, width)
 
-    }
+    }*/
 }
