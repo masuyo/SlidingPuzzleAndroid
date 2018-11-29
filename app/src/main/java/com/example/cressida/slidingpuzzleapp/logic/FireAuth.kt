@@ -39,7 +39,7 @@ class FireAuth(private val activity: Activity) : FireControl() {
             if (task.isSuccessful) {
                 activity.setResult(Activity.RESULT_OK, Intent())
                 activity.finish()
-                Toast.makeText(activity, "Login succesful!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Login successful!", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(activity, "Login failed", Toast.LENGTH_SHORT).show()
             }

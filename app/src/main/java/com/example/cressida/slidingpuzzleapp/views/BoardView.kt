@@ -1,9 +1,12 @@
 package com.example.cressida.slidingpuzzleapp.views
 
+import android.app.Activity
 import android.view.View
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.logic.Block
 
@@ -12,10 +15,13 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val ROWS = 6
     private val COLUMNS = 6
     private val BLOCKSNUM = 3
+    private val scale = resources.displayMetrics.density*2;
 
-    // TODO: get actual height and width before rendering, fuck this
-    private val ROWHEIGHT = (600 / ROWS).toInt()
-    private val ROWWIDTH = (600 / COLUMNS).toInt()
+    private val height = 150 * scale
+    private val width = 150 * scale
+
+    private val ROWHEIGHT = (height / ROWS).toInt()
+    private val ROWWIDTH = (width / COLUMNS).toInt()
 
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
@@ -35,40 +41,93 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         generateColorsForRects()
     }
 
+    private var initialX:Float = ROWS.toFloat()
+    private var initialY:Float = ROWS.toFloat()
+    val TAG:String = this::class.java.simpleName
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+
+        var rectIndex = 0
+        var touching: Boolean = false
+
+
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                initialX = event.x
+                initialY = event.y
+                rectIndex = getRectIndexFor(initialX!!.toFloat(), initialY!!.toFloat())
+                touching = true
+                Log.d(TAG, ("DOWN: x: $initialX, y: $initialY"))
+                invalidate(blockRects[rectIndex])
+
+            }
+
+        // user pressed - move the block
+        // get coordinates of the block
+            MotionEvent.ACTION_UP -> {
+                var finalX = event.x
+                var finalY = event.y
+                touching = false
+                invalidate(blockRects[rectIndex])
+            }
+        // user released - new block location
+        // add change to the coordinates of the block
+/*            MotionEvent.ACTION_MOVE -> {
+                blocksDummy[0].x = 3
+                generateRectsFromBlocks()
+                invalidate()
+            }*/
+        // user moved his finger - direction
+        // calculate the change
+
+/*            MotionEvent.ACTION_OUTSIDE -> {
+                blocksDummy[0].x = 3
+                generateRectsFromBlocks()
+                invalidate()
+            }*/
+        // occurred outside bounds of current screen element
+        // do nothing*/
+            else -> super.onTouchEvent(event)
+        // do nothing
+        }
+
+        return true // event handled
+    }
+
+
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        // TODO: draw a level using a matrix
+        canvas!!.drawColor(Color.BLACK)
+        DrawBlocks(canvas)
+    }
+
+    private fun DrawBlocks(canvas: Canvas) {
         for (i in 0 until BLOCKSNUM) {
             canvas!!.drawRect(blockRects[i], rectColors[i])
         }
     }
 
-    /* override fun onTouchEvent(event: MotionEvent?): Boolean {
+    fun getRectIndexFor(x: Float, y: Float): Int {
+        var xint = x.toInt()
+        var yint = y.toInt()
+        Log.d(TAG, ("Coordinates in int: x: $xint, y: $yint"))
+        for (i in 0 until 3) {
+            var cont = blockRects[i].contains(x.toInt(), y.toInt())
+            if (cont) {
 
-         var touchX = event?.x
-         var touchY = event?.y
-
-         when(event?.action) {
-             MotionEvent.ACTION_DOWN -> true
-             // user pressed - move the block
-             // get coordinates of the block
-             MotionEvent.ACTION_UP -> true
-             // user released - new block location
-             // add change to the coordinates of the block
-             MotionEvent.ACTION_MOVE -> true
-             // user moved his finger - direction
-             // calculate the change
-             MotionEvent.ACTION_OUTSIDE -> true
-             // occurred outside bounds of current screen element
-             // do nothing
-             else -> super.onTouchEvent(event)
-             // do nothing
-         }
-
-         invalidate()
-         return true // event handled
-     }*/
+                return i
+            }
+            var left = blockRects[i].left
+            var top = blockRects[i].top
+            var right = blockRects[i].right
+            var bottom = blockRects[i].bottom
+            Log.d(TAG, ("$i RECTDOWN: Left: $left, Top: $top, Right: $right, Bottom: $bottom, Contains: $cont"))
+        }
+        return -1 // x, y do not lie in our view
+    }
 
     private fun generateRectsFromBlocks() {
 
@@ -99,9 +158,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 bottom = block.y * ROWHEIGHT
 
             }
-            rect = Rect(left, top, right, bottom)
+            rect = Rect(left, bottom, right, top)
+
             blockRects!!.add(rect)
         }
+
     }
 
     private fun generateColorsForRects() {
@@ -125,4 +186,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     }
 
+/*    // preserve a squared ratio
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val width = measuredWidth
+        setMeasuredDimension(width, width)
+
+    }*/
 }
