@@ -27,5 +27,7 @@ class LoginRegisterActivity : Activity() {
 
         login_button.setOnClickListener { fireAuth.loginUser(email.text.toString(), password.text.toString()) }
         register_button.setOnClickListener { fireAuth.registerUser(email.text.toString(), password.text.toString()) }
+
     }
+
 }
