@@ -6,20 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".views.IntroActivity"
     android:background="@drawable/theme">
-
-    <Button
-        android:id="@+id/startbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:text="Start"
-        android:textColor="@color/red"
-        android:background="transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.984" />
 </android.support.constraint.ConstraintLayout>
