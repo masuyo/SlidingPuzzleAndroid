@@ -1,27 +1,26 @@
 package com.example.cressida.slidingpuzzleapp.views
 
-import android.app.Activity
 import android.view.View
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.logic.Block
 
+@Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
 
-    private val ROWS = 6
-    private val COLUMNS = 6
-    private val BLOCKSNUM = 3
-    private val scale = resources.displayMetrics.density*2;
+    private val rows = 6
+    private val columns = 6
+    private val blocksNum = 3
+    private val scale = resources.displayMetrics.density*2
 
-    private val height = 150 * scale
-    private val width = 150 * scale
+    private var height = 150 * scale
+    private var width = 150 * scale
 
-    private val ROWHEIGHT = (height / ROWS).toInt()
-    private val ROWWIDTH = (width / COLUMNS).toInt()
+    private val rowHeight = (height / rows).toInt()
+    private val rowWidth = (width / columns).toInt()
 
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
@@ -41,45 +40,74 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         generateColorsForRects()
     }
 
-    private var initialX:Float = ROWS.toFloat()
-    private var initialY:Float = ROWS.toFloat()
+    private var initialX:Float = (0).toFloat()
+    private var initialY:Float = (0).toFloat()
+    private var prevX:Float = (0).toFloat()
+    private var prevY:Float = (0).toFloat()
+    var rectIndex = 0
     val TAG:String = this::class.java.simpleName
 
+    /*
+        TODO:
+        1. Check if actual coordinates are bigger or smaller then the initial
+        2. According to step one, give or take from rect coordinates you want to move
+        3. Check if the newly coordinated rect intersects with another
+        4. If true -> do nothing
+        5. If false -> move the rect
+     */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-
-        var rectIndex = 0
         var touching: Boolean = false
 
-
         when (event?.action) {
+        // gesture begins with this
             MotionEvent.ACTION_DOWN -> {
+                // touch coordinates
                 initialX = event.x
                 initialY = event.y
-                rectIndex = getRectIndexFor(initialX!!.toFloat(), initialY!!.toFloat())
+                prevX = initialX
+                prevY = initialY
+                rectIndex = getRectIndexFor(initialX, initialY)
                 touching = true
                 Log.d(TAG, ("DOWN: x: $initialX, y: $initialY"))
+                // only this area is redrawn
                 invalidate(blockRects[rectIndex])
 
             }
 
-        // user pressed - move the block
-        // get coordinates of the block
+        // this gets called when the user starts moving his finger on the screen
+            MotionEvent.ACTION_MOVE -> {
+                var actualX = event.x
+                var actualY = event.y
+                if (blocksDummy[rectIndex].vertical) {
+                    var diff = actualY - prevY
+                    Log.d(TAG, ("DIFF: $diff"))
+                    if (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height) {
+                        blockRects[rectIndex].top += diff.toInt()
+                        blockRects[rectIndex].bottom += diff.toInt()
+                    }
+                    if (blockRects[rectIndex].top + diff.toInt() > 0 && diff < 0) {
+                        blockRects[rectIndex].top += diff.toInt()
+                        blockRects[rectIndex].bottom += diff.toInt()
+                    }
+
+                }
+                //generateRectsFromBlocks()
+                invalidate(blockRects[rectIndex])
+
+                prevX = actualX
+                prevY = actualY
+            }
+
+        // gesture ends with this
+        // so this should finish a move
+        // it should call the logic for Block coordinate change
             MotionEvent.ACTION_UP -> {
-                var finalX = event.x
-                var finalY = event.y
+                //prevX = event.x
+                //prevY = event.y
                 touching = false
                 invalidate(blockRects[rectIndex])
             }
-        // user released - new block location
-        // add change to the coordinates of the block
-/*            MotionEvent.ACTION_MOVE -> {
-                blocksDummy[0].x = 3
-                generateRectsFromBlocks()
-                invalidate()
-            }*/
-        // user moved his finger - direction
-        // calculate the change
 
 /*            MotionEvent.ACTION_OUTSIDE -> {
                 blocksDummy[0].x = 3
@@ -95,22 +123,40 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         return true // event handled
     }
 
-
-
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        height = canvas!!.height.toFloat()
+        width = canvas!!.width.toFloat()
         canvas!!.drawColor(Color.BLACK)
         DrawBlocks(canvas)
     }
 
     private fun DrawBlocks(canvas: Canvas) {
-        for (i in 0 until BLOCKSNUM) {
+        for (i in 0 until blocksNum) {
             canvas!!.drawRect(blockRects[i], rectColors[i])
         }
     }
 
-    fun getRectIndexFor(x: Float, y: Float): Int {
+/*    private fun checkCoordinates(x: Float, y: Float): Boolean {
+        if (x > initialX)
+            novel
+        if (x < initialX)
+            csökkent
+        if (y > initialY)
+            novel
+        if (y < initialY)
+            csokkent
+
+        return true
+    }
+
+    private fun calculateCoordinates(actual: Float, initial: Float) : Float {
+
+        return actual - initial
+    }*/
+
+    private fun getRectIndexFor(x: Float, y: Float): Int {
         var xint = x.toInt()
         var yint = y.toInt()
         Log.d(TAG, ("Coordinates in int: x: $xint, y: $yint"))
@@ -131,36 +177,36 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private fun generateRectsFromBlocks() {
 
-        var block: Block? = null
-        var rect: Rect? = null
-        var left: Int? = null
-        var top: Int? = null
-        var right: Int? = null
-        var bottom: Int? = null
+        var block: Block?
+        var rect: Rect?
+        var left: Int?
+        var top: Int?
+        var right: Int?
+        var bottom: Int?
 
 
-        for (i in 0 until BLOCKSNUM) {
+        for (i in 0 until blocksNum) {
 
             block = blocksDummy[i]
 
             if (!block.vertical) {
 
-                left = block.x * ROWWIDTH // X coordinate of the left side of the rectangle
-                top = (block.y + 1) * ROWHEIGHT // Y coordinate of the top of the rectangle
-                right = (block.x + block.size) * ROWWIDTH // The X coordinate of the right side of the rectangle
-                bottom = block.y * ROWHEIGHT // Y coordinate of the bottom of the rectangle
+                left = block.x * rowWidth // X coordinate of the left side of the rectangle
+                top = (block.y + 1) * rowHeight // Y coordinate of the top of the rectangle
+                right = (block.x + block.size) * rowWidth // The X coordinate of the right side of the rectangle
+                bottom = block.y * rowHeight // Y coordinate of the bottom of the rectangle
 
             } else {
 
-                left = block.x * ROWWIDTH
-                top = (block.y + block.size) * ROWHEIGHT
-                right = (block.x + 1) * ROWWIDTH
-                bottom = block.y * ROWHEIGHT
+                left = block.x * rowWidth
+                top = (block.y + block.size) * rowHeight
+                right = (block.x + 1) * rowWidth
+                bottom = block.y * rowHeight
 
             }
             rect = Rect(left, bottom, right, top)
 
-            blockRects!!.add(rect)
+            blockRects.add(rect)
         }
 
     }
@@ -186,11 +232,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     }
 
-/*    // preserve a squared ratio
+    // preserve a squared ratio
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val width = measuredWidth
         setMeasuredDimension(width, width)
 
-    }*/
+    }
 }
