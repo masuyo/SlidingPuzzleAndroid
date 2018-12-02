@@ -3,7 +3,7 @@ package com.example.cressida.slidingpuzzleapp
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_play.*
+import android.widget.ImageView
 
 class PlayActivity : AppCompatActivity() {
 
@@ -11,17 +11,20 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
-        playButton.setOnClickListener {
+        var playB = findViewById<ImageView>(R.id.playButton)
+        playB.setOnClickListener {
             val intent = Intent( this, LevelActivity::class.java)
             startActivity(intent)
         }
 
-        settingsButton.setOnClickListener {
+        var settingsB = findViewById<ImageView>(R.id.settingsButton)
+        settingsB.setOnClickListener {
             val intent = Intent( this, SettingsActivity::class.java)
             startActivity(intent)
         }
 
-        leaderboardButton.setOnClickListener {
+        var leaderboardB = findViewById<ImageView>(R.id.leaderboardButton)
+        leaderboardB.setOnClickListener {
             val intent = Intent( this, LeaderboardActivity::class.java)
             startActivity(intent)
         }
