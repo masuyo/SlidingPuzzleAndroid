@@ -86,11 +86,22 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                         blockRects[rectIndex].top += diff.toInt()
                         blockRects[rectIndex].bottom += diff.toInt()
                     }
-                    if (blockRects[rectIndex].top + diff.toInt() > 0 && diff < 0) {
+                    if (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0) {
                         blockRects[rectIndex].top += diff.toInt()
                         blockRects[rectIndex].bottom += diff.toInt()
                     }
 
+                } else {
+                    var diff = actualX - prevX
+                    Log.d(TAG, ("DIFF: $diff"))
+                    if (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width) {
+                        blockRects[rectIndex].left += diff.toInt()
+                        blockRects[rectIndex].right += diff.toInt()
+                    }
+                    if (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0) {
+                        blockRects[rectIndex].left += diff.toInt()
+                        blockRects[rectIndex].right += diff.toInt()
+                    }
                 }
                 //generateRectsFromBlocks()
                 invalidate(blockRects[rectIndex])
@@ -126,6 +137,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        // Reset height and width to canvas props for movement logic
         height = canvas!!.height.toFloat()
         width = canvas!!.width.toFloat()
         canvas!!.drawColor(Color.BLACK)
