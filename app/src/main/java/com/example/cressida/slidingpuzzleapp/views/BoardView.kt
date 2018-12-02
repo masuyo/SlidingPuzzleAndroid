@@ -24,6 +24,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
     private var greenPaint: Paint? = null
+    //private var horizontalThreeImage: ImagePattern? = null
 
     private val blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
@@ -101,7 +102,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
         height = canvas!!.height.toFloat()
         width = canvas!!.width.toFloat()
-        canvas!!.drawColor(Color.BLACK)
+        //canvas!!.drawColor(Color.BLACK)
         drawBlocks(canvas)
     }
 
@@ -205,6 +206,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         purplePaint?.color = Color.MAGENTA
         bluePaint?.color = Color.BLUE
         greenPaint?.color = Color.GREEN
+
 
         purplePaint?.isAntiAlias = true
         bluePaint?.isAntiAlias = true

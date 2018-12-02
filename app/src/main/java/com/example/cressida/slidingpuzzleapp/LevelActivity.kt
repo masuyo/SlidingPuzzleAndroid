@@ -13,8 +13,6 @@ class LevelActivity : AppCompatActivity() {
         setContentView(R.layout.activity_level)
         val view = findViewById<BoardView>(R.id.board_view)
 
-
-
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
