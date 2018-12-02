@@ -1,11 +1,21 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
+import android.support.v7.widget.RecyclerView
+import android.util.Log
+import com.example.cressida.slidingpuzzleapp.Model.LeaderboardData
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class FireDB : FireControl() {
 
     private val db = FirebaseFirestore.getInstance()
     private val uid = GetUID()
+
+    companion object {
+
+        var highScoreList = ArrayList<LeaderboardData>()
+
+    }
 
     private fun GetUID(): String {
 
@@ -58,22 +68,30 @@ class FireDB : FireControl() {
 
     }
 
-    fun GetAllHighScore(): ArrayList<Pair<String, Double>> {
+    fun GetAllHighScore(adapter: LeaderboardAdapter) {
         val uCollection = db.collection("users")
-        var highScoreList = ArrayList<Pair<String, Double>>()
 
-        uCollection.orderBy("highscore").get()
-                .addOnSuccessListener {
-                    for (document in it) {
-                        val username = document.getString("username")!!
-                        val highscore = document.getDouble("highscore")!!
+        highScoreList.clear()
 
-                        val pair = Pair<String, Double>(username, highscore)
-                        highScoreList.add(pair)
+        uCollection.orderBy("highscore", Query.Direction.DESCENDING).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.getResult()!!) {
+
+                            val data = document.toObject(LeaderboardData::class.java)
+
+                            highScoreList.add(document.toObject(LeaderboardData::class.java))
+                            //Log.e("sajt", highScoreList.count().toString())
+                            adapter.notifyDataSetChanged()
+                        }
                     }
+
                 }
 
-        return highScoreList
+        Log.e("sajt", highScoreList.count().toString())
+        for (data in highScoreList) {
+            Log.e("sajt", data.username + " " + data.highscore)
+        }
     }
 
     fun GetHighScore(): Double {
