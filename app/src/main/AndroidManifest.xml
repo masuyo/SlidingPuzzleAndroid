@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".PlayActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".LeaderbordActivity"></activity>
+        <activity android:name=".LeaderboardActivity"></activity>
     </application>
 
 </manifest>

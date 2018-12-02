@@ -12,7 +12,7 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_play)
 
         playButton.setOnClickListener {
-            val intent = Intent( this, MainActivity::class.java)
+            val intent = Intent( this, LevelActivity::class.java)
             startActivity(intent)
         }
 
@@ -22,7 +22,7 @@ class PlayActivity : AppCompatActivity() {
         }
 
         leaderboardButton.setOnClickListener {
-            val intent = Intent( this, LeaderbordActivity::class.java)
+            val intent = Intent( this, LeaderboardActivity::class.java)
             startActivity(intent)
         }
     }

@@ -11,7 +11,7 @@ class LevelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_level)
-        val view = findViewById<BoardView>(R.id.board_view)
+        //val view = findViewById<BoardView>(R.id.board_view)
 
     }
 
