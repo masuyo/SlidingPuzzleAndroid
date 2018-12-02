@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.cressida.slidingpuzzleapp.logic.FireAuth
 import com.example.cressida.slidingpuzzleapp.views.PlayActivity
+import com.example.cressida.slidingpuzzleapp.views.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 
 import kotlinx.android.synthetic.main.activity_login_register.*
@@ -25,13 +26,13 @@ class LoginRegisterActivity : Activity() {
 
         var fireAuth = FireAuth(this)
 
-        val intent = Intent(applicationContext, PlayActivity::class.java)
-        startActivity(intent)
+        fireAuth.isUserLoggedIn(PlayActivity())
 
-        //fireAuth.isUserLoggedIn()
-
-        //login_button.setOnClickListener { fireAuth.loginUser(email.text.toString(), password.text.toString()) }
-        //register_button.setOnClickListener { fireAuth.registerUser(email.text.toString(), password.text.toString()) }
+        login_button.setOnClickListener { fireAuth.loginUser(email.text.toString(), password.text.toString(), PlayActivity()) }
+        register_button.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

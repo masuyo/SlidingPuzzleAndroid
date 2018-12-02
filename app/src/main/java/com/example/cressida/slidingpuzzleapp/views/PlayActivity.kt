@@ -3,7 +3,6 @@ package com.example.cressida.slidingpuzzleapp.views
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.example.cressida.slidingpuzzleapp.LevelActivity
 import com.example.cressida.slidingpuzzleapp.MainActivity
 import com.example.cressida.slidingpuzzleapp.R
 import kotlinx.android.synthetic.main.activity_play.*
@@ -25,7 +24,7 @@ class PlayActivity : AppCompatActivity() {
         }
 
         leaderboardButton.setOnClickListener {
-            val intent = Intent( this, LeaderbordActivity::class.java)
+            val intent = Intent(this, LeaderboardActivity::class.java)
             startActivity(intent)
         }
     }
