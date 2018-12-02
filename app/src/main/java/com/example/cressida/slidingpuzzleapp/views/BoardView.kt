@@ -71,8 +71,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 touching = true
                 Log.d(TAG, ("DOWN: x: $initialX, y: $initialY"))
                 // only this area is redrawn
-                invalidate(blockRects[rectIndex])
-
+                // invalidate(blockRects[rectIndex])
             }
 
         // this gets called when the user starts moving his finger on the screen
@@ -80,50 +79,64 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 var actualX = event.x
                 var actualY = event.y
                 // move vertical block
-                if (blocksDummy[rectIndex].vertical) {
-                    var diff = actualY - prevY
-                    Log.d(TAG, ("DIFF: $diff"))
-                    // stay within vertical boundaries
-                    if (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height) {
-                        var movingRect = blockRects[rectIndex]
-                        var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
-                        rect.top += diff.toInt()
-                        rect.bottom += diff.toInt()
+                if (rectIndex != -1) {
+                    if (blocksDummy[rectIndex].vertical) {
+                        var diff = actualY - prevY
+                        Log.d(TAG, ("DIFF: $diff"))
+                        // stay within vertical boundaries
+                        if (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height) {
+                            var movingRect = blockRects[rectIndex]
+                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+                            rect.top += diff.toInt()
+                            rect.bottom += diff.toInt()
 
-                        if (!isRectIntersectsAnother(rect, rectIndex)) {
-                            blockRects[rectIndex].top += diff.toInt()
-                            blockRects[rectIndex].bottom += diff.toInt()
-                            invalidate(blockRects[rectIndex])
+                            if (!isRectIntersectsAnother(rect, rectIndex)) {
+                                blockRects[rectIndex].top += diff.toInt()
+                                blockRects[rectIndex].bottom += diff.toInt()
+                                invalidate(blockRects[rectIndex])
+                            }
                         }
-                    }
-                    if (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0) {
-                        var movingRect = blockRects[rectIndex]
-                        var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
-                        rect.top += diff.toInt()
-                        rect.bottom += diff.toInt()
+                        if (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0) {
+                            var movingRect = blockRects[rectIndex]
+                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+                            rect.top += diff.toInt()
+                            rect.bottom += diff.toInt()
 
-                        if (!isRectIntersectsAnother(rect, rectIndex)) {
-                            blockRects[rectIndex].top += diff.toInt()
-                            blockRects[rectIndex].bottom += diff.toInt()
-                            invalidate(blockRects[rectIndex])
+                            if (!isRectIntersectsAnother(rect, rectIndex)) {
+                                blockRects[rectIndex].top += diff.toInt()
+                                blockRects[rectIndex].bottom += diff.toInt()
+                                invalidate(blockRects[rectIndex])
+                            }
                         }
-                    }
 
-                } else { // move horizontal block
-                    var diff = actualX - prevX
-                    Log.d(TAG, ("DIFF: $diff"))
-                    // stay within horizontal boundaries
-                    if (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width) {
-                        blockRects[rectIndex].left += diff.toInt()
-                        blockRects[rectIndex].right += diff.toInt()
+                    } else { // move horizontal block
+                        var diff = actualX - prevX
+                        Log.d(TAG, ("DIFF: $diff"))
+                        // stay within horizontal boundaries
+                        if (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width) {
+                            var movingRect = blockRects[rectIndex]
+                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+                            rect.left += diff.toInt()
+                            rect.right += diff.toInt()
 
-                        invalidate(blockRects[rectIndex])
-                    }
-                    if (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0) {
-                        blockRects[rectIndex].left += diff.toInt()
-                        blockRects[rectIndex].right += diff.toInt()
+                            if (!isRectIntersectsAnother(rect, rectIndex)) {
+                                blockRects[rectIndex].left += diff.toInt()
+                                blockRects[rectIndex].right += diff.toInt()
+                                invalidate(blockRects[rectIndex])
+                            }
+                        }
+                        if (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0) {
+                            var movingRect = blockRects[rectIndex]
+                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+                            rect.left += diff.toInt()
+                            rect.right += diff.toInt()
 
-                        invalidate(blockRects[rectIndex])
+                            if (!isRectIntersectsAnother(rect, rectIndex)) {
+                                blockRects[rectIndex].left += diff.toInt()
+                                blockRects[rectIndex].right += diff.toInt()
+                                invalidate(blockRects[rectIndex])
+                            }
+                        }
                     }
                 }
                 //generateRectsFromBlocks()
@@ -140,7 +153,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 //prevX = event.x
                 //prevY = event.y
                 touching = false
-                invalidate(blockRects[rectIndex])
+                //invalidate(blockRects[rectIndex])
             }
 
 /*            MotionEvent.ACTION_OUTSIDE -> {
