@@ -79,32 +79,55 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             MotionEvent.ACTION_MOVE -> {
                 var actualX = event.x
                 var actualY = event.y
+                // move vertical block
                 if (blocksDummy[rectIndex].vertical) {
                     var diff = actualY - prevY
                     Log.d(TAG, ("DIFF: $diff"))
+                    // stay within vertical boundaries
                     if (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height) {
-                        blockRects[rectIndex].top += diff.toInt()
-                        blockRects[rectIndex].bottom += diff.toInt()
+                        var movingRect = blockRects[rectIndex]
+                        var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+                        rect.top += diff.toInt()
+                        rect.bottom += diff.toInt()
+
+                        if (!isRectIntersectsAnother(rect, rectIndex)) {
+                            blockRects[rectIndex].top += diff.toInt()
+                            blockRects[rectIndex].bottom += diff.toInt()
+                            invalidate(blockRects[rectIndex])
+                        }
                     }
                     if (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0) {
-                        blockRects[rectIndex].top += diff.toInt()
-                        blockRects[rectIndex].bottom += diff.toInt()
+                        var movingRect = blockRects[rectIndex]
+                        var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+                        rect.top += diff.toInt()
+                        rect.bottom += diff.toInt()
+
+                        if (!isRectIntersectsAnother(rect, rectIndex)) {
+                            blockRects[rectIndex].top += diff.toInt()
+                            blockRects[rectIndex].bottom += diff.toInt()
+                            invalidate(blockRects[rectIndex])
+                        }
                     }
 
-                } else {
+                } else { // move horizontal block
                     var diff = actualX - prevX
                     Log.d(TAG, ("DIFF: $diff"))
+                    // stay within horizontal boundaries
                     if (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width) {
                         blockRects[rectIndex].left += diff.toInt()
                         blockRects[rectIndex].right += diff.toInt()
+
+                        invalidate(blockRects[rectIndex])
                     }
                     if (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0) {
                         blockRects[rectIndex].left += diff.toInt()
                         blockRects[rectIndex].right += diff.toInt()
+
+                        invalidate(blockRects[rectIndex])
                     }
                 }
                 //generateRectsFromBlocks()
-                invalidate(blockRects[rectIndex])
+                //invalidate(blockRects[rectIndex])
 
                 prevX = actualX
                 prevY = actualY
@@ -167,6 +190,17 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
         return actual - initial
     }*/
+
+    private fun isRectIntersectsAnother(rect: Rect, rectIndex: Int): Boolean {
+        for (i in 0 until 3) {
+            if (i != rectIndex) {
+                if (rect.intersect(blockRects[i])) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
     private fun getRectIndexFor(x: Float, y: Float): Int {
         var xint = x.toInt()
