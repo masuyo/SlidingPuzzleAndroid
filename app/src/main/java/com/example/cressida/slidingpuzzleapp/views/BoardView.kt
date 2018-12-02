@@ -13,7 +13,6 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private val rows = 6
     private val columns = 6
-    private val blocksNum = 3
     private val scale = resources.displayMetrics.density*2
 
     private var height = 150 * scale
@@ -44,25 +43,15 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var initialY:Float = (0).toFloat()
     private var prevX:Float = (0).toFloat()
     private var prevY:Float = (0).toFloat()
-    var rectIndex = 0
-    val TAG:String = this::class.java.simpleName
+    private var rectIndex = 0
+    private val TAG:String = this::class.java.simpleName
 
-    /*
-        TODO:
-        1. Check if actual coordinates are bigger or smaller then the initial
-        2. According to step one, give or take from rect coordinates you want to move
-        3. Check if the newly coordinated rect intersects with another
-        4. If true -> do nothing
-        5. If false -> move the rect
-     */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         var touching: Boolean = false
 
         when (event?.action) {
-        // gesture begins with this
             MotionEvent.ACTION_DOWN -> {
-                // touch coordinates
                 initialX = event.x
                 initialY = event.y
                 prevX = initialX
@@ -70,142 +59,86 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 rectIndex = getRectIndexFor(initialX, initialY)
                 touching = true
                 Log.d(TAG, ("DOWN: x: $initialX, y: $initialY"))
-                // only this area is redrawn
-                // invalidate(blockRects[rectIndex])
             }
 
-        // this gets called when the user starts moving his finger on the screen
             MotionEvent.ACTION_MOVE -> {
+
                 var actualX = event.x
                 var actualY = event.y
-                // move vertical block
+
                 if (rectIndex != -1) {
                     if (blocksDummy[rectIndex].vertical) {
                         var diff = actualY - prevY
-                        Log.d(TAG, ("DIFF: $diff"))
-                        // stay within vertical boundaries
-                        if (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height) {
-                            var movingRect = blockRects[rectIndex]
-                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
-                            rect.top += diff.toInt()
-                            rect.bottom += diff.toInt()
-
-                            if (!isRectIntersectsAnother(rect, rectIndex)) {
-                                blockRects[rectIndex].top += diff.toInt()
-                                blockRects[rectIndex].bottom += diff.toInt()
-                                invalidate(blockRects[rectIndex])
-                            }
+                        var staysWithinTopBoundary = (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0)
+                        var staysWithinBottomBoundary = (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height)
+                        if (staysWithinTopBoundary || staysWithinBottomBoundary) {
+                            this.checkForVerticalChangeAndInvalidate(diff)
                         }
-                        if (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0) {
-                            var movingRect = blockRects[rectIndex]
-                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
-                            rect.top += diff.toInt()
-                            rect.bottom += diff.toInt()
-
-                            if (!isRectIntersectsAnother(rect, rectIndex)) {
-                                blockRects[rectIndex].top += diff.toInt()
-                                blockRects[rectIndex].bottom += diff.toInt()
-                                invalidate(blockRects[rectIndex])
-                            }
-                        }
-
-                    } else { // move horizontal block
+                    } else {
                         var diff = actualX - prevX
-                        Log.d(TAG, ("DIFF: $diff"))
-                        // stay within horizontal boundaries
-                        if (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width) {
-                            var movingRect = blockRects[rectIndex]
-                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
-                            rect.left += diff.toInt()
-                            rect.right += diff.toInt()
-
-                            if (!isRectIntersectsAnother(rect, rectIndex)) {
-                                blockRects[rectIndex].left += diff.toInt()
-                                blockRects[rectIndex].right += diff.toInt()
-                                invalidate(blockRects[rectIndex])
-                            }
-                        }
-                        if (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0) {
-                            var movingRect = blockRects[rectIndex]
-                            var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
-                            rect.left += diff.toInt()
-                            rect.right += diff.toInt()
-
-                            if (!isRectIntersectsAnother(rect, rectIndex)) {
-                                blockRects[rectIndex].left += diff.toInt()
-                                blockRects[rectIndex].right += diff.toInt()
-                                invalidate(blockRects[rectIndex])
-                            }
+                        var staysWithinLeftBoundary = (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width)
+                        var staysWithingRightBoundary = (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0)
+                        if (staysWithinLeftBoundary || staysWithingRightBoundary) {
+                            this.checkForHorizontalChangeAndInvalidate(diff)
                         }
                     }
                 }
-                //generateRectsFromBlocks()
-                //invalidate(blockRects[rectIndex])
-
                 prevX = actualX
                 prevY = actualY
             }
 
-        // gesture ends with this
-        // so this should finish a move
-        // it should call the logic for Block coordinate change
+            // it should call the logic for Block coordinate change
             MotionEvent.ACTION_UP -> {
-                //prevX = event.x
-                //prevY = event.y
-                touching = false
-                //invalidate(blockRects[rectIndex])
+
             }
-
-/*            MotionEvent.ACTION_OUTSIDE -> {
-                blocksDummy[0].x = 3
-                generateRectsFromBlocks()
-                invalidate()
-            }*/
-        // occurred outside bounds of current screen element
-        // do nothing*/
             else -> super.onTouchEvent(event)
-        // do nothing
         }
-
-        return true // event handled
+        return true
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        // Reset height and width to canvas props for movement logic
         height = canvas!!.height.toFloat()
         width = canvas!!.width.toFloat()
         canvas!!.drawColor(Color.BLACK)
-        DrawBlocks(canvas)
+        drawBlocks(canvas)
     }
 
-    private fun DrawBlocks(canvas: Canvas) {
-        for (i in 0 until blocksNum) {
+    private fun drawBlocks(canvas: Canvas) {
+        for (i in 0 until blockRects.size) {
             canvas!!.drawRect(blockRects[i], rectColors[i])
         }
     }
 
-/*    private fun checkCoordinates(x: Float, y: Float): Boolean {
-        if (x > initialX)
-            novel
-        if (x < initialX)
-            csökkent
-        if (y > initialY)
-            novel
-        if (y < initialY)
-            csokkent
+    private fun checkForHorizontalChangeAndInvalidate(diff: Float) {
+        var movingRect = blockRects[rectIndex]
+        var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+        rect.left += diff.toInt()
+        rect.right += diff.toInt()
 
-        return true
+        if (!isRectIntersectsAnother(rect, rectIndex)) {
+            blockRects[rectIndex].left += diff.toInt()
+            blockRects[rectIndex].right += diff.toInt()
+            invalidate(blockRects[rectIndex])
+        }
     }
 
-    private fun calculateCoordinates(actual: Float, initial: Float) : Float {
+    private fun checkForVerticalChangeAndInvalidate(diff: Float) {
+        var movingRect = blockRects[rectIndex]
+        var rect = Rect(movingRect.left, movingRect.top, movingRect.right, movingRect.bottom)
+        rect.top += diff.toInt()
+        rect.bottom += diff.toInt()
 
-        return actual - initial
-    }*/
+        if (!isRectIntersectsAnother(rect, rectIndex)) {
+            blockRects[rectIndex].top += diff.toInt()
+            blockRects[rectIndex].bottom += diff.toInt()
+            invalidate(blockRects[rectIndex])
+        }
+    }
 
     private fun isRectIntersectsAnother(rect: Rect, rectIndex: Int): Boolean {
-        for (i in 0 until 3) {
+        for (i in 0 until blockRects.size) {
             if (i != rectIndex) {
                 if (rect.intersect(blockRects[i])) {
                     return true
@@ -216,22 +149,14 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     }
 
     private fun getRectIndexFor(x: Float, y: Float): Int {
-        var xint = x.toInt()
-        var yint = y.toInt()
-        Log.d(TAG, ("Coordinates in int: x: $xint, y: $yint"))
-        for (i in 0 until 3) {
+        for (i in 0 until blockRects.size) {
             var cont = blockRects[i].contains(x.toInt(), y.toInt())
             if (cont) {
 
                 return i
             }
-            var left = blockRects[i].left
-            var top = blockRects[i].top
-            var right = blockRects[i].right
-            var bottom = blockRects[i].bottom
-            Log.d(TAG, ("$i RECTDOWN: Left: $left, Top: $top, Right: $right, Bottom: $bottom, Contains: $cont"))
         }
-        return -1 // x, y do not lie in our view
+        return -1
     }
 
     private fun generateRectsFromBlocks() {
@@ -244,7 +169,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         var bottom: Int?
 
 
-        for (i in 0 until blocksNum) {
+        for (i in 0 until blocksDummy.size) {
 
             block = blocksDummy[i]
 
@@ -296,6 +221,5 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val width = measuredWidth
         setMeasuredDimension(width, width)
-
     }
 }
