@@ -26,12 +26,11 @@ class LeaderboardActivity : AppCompatActivity() {
 
         var mDocRef = FirebaseFirestore.getInstance().collection("users")
 
-        mDocRef.addSnapshotListener(EventListener<QuerySnapshot> { snapshots, e ->
-            fireDB.GetAllHighScore((rv_leaderboard.adapter as LeaderboardAdapter))
-        })
+
 
         rv_leaderboard.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         rv_leaderboard.adapter = LeaderboardAdapter(FireDB.highScoreList)
+
         fireDB.GetAllHighScore((rv_leaderboard.adapter as LeaderboardAdapter))
 
 

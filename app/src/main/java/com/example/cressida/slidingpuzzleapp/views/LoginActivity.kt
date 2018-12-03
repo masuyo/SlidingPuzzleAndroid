@@ -6,13 +6,13 @@ import android.os.Bundle
 import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.FireAuth
 
-import kotlinx.android.synthetic.main.activity_login_register.*
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_register)
+        setContentView(R.layout.activity_login)
 
         var fireAuth = FireAuth(this)
 
