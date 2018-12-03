@@ -1,16 +1,14 @@
-package com.example.cressida.slidingpuzzleapp
+package com.example.cressida.slidingpuzzleapp.views
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.FireAuth
-import com.example.cressida.slidingpuzzleapp.views.PlayActivity
-import com.example.cressida.slidingpuzzleapp.views.RegisterActivity
-import com.google.firebase.auth.FirebaseAuth
 
 import kotlinx.android.synthetic.main.activity_login_register.*
 
-class LoginRegisterActivity : Activity() {
+class LoginActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

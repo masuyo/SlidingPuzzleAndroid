@@ -10,10 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity
-            android:name=".LoginRegisterActivity"
-            android:label="@string/title_activity_login_register"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".views.LoginActivity" />
         <activity android:name=".IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".LeaderboardActivity" />
-        <activity android:name=".LevelActivity" />
         <activity android:name=".views.PlayActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".LevelActivity" />
         <activity android:name=".views.LeaderboardActivity" />
         <activity android:name=".views.RegisterActivity"></activity>
     </application>

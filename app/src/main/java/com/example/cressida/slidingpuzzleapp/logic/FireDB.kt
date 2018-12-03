@@ -1,5 +1,6 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
+import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.example.cressida.slidingpuzzleapp.Model.LeaderboardData
@@ -31,9 +32,9 @@ class FireDB : FireControl() {
         val data = HashMap<String, Any>()
         data["score"] = score
 
-        db.collection("users").document(uid).collection("levelscores").document(level).set(data)
-
-        UpdateHighScore()
+        db.collection("users").document(uid).collection("levelscores").document(level).set(data).addOnSuccessListener {
+            UpdateHighScore()
+        }
     }
 
     fun GetScore(level: String): Double {
@@ -82,8 +83,8 @@ class FireDB : FireControl() {
 
                             highScoreList.add(document.toObject(LeaderboardData::class.java))
                             //Log.e("sajt", highScoreList.count().toString())
-                            adapter.notifyDataSetChanged()
                         }
+                        adapter.notifyDataSetChanged()
                     }
 
                 }

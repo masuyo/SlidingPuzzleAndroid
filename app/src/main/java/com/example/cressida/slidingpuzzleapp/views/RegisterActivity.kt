@@ -1,9 +1,7 @@
 package com.example.cressida.slidingpuzzleapp.views
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
-import com.example.cressida.slidingpuzzleapp.LoginRegisterActivity
 import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.FireAuth
 
@@ -19,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
 
         register_button.setOnClickListener { fireAuth.registerUser(email.text.toString(), password.text.toString(), passwordre.text.toString(), username.text.toString(), PlayActivity()) }
 
-        fireAuth.logout(LoginRegisterActivity())
+        fireAuth.logout(LoginActivity())
     }
 
 }
