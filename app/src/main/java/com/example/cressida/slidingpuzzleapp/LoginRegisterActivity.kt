@@ -3,14 +3,6 @@ package com.example.cressida.slidingpuzzleapp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextUtils
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
 import com.example.cressida.slidingpuzzleapp.logic.FireAuth
 import com.example.cressida.slidingpuzzleapp.views.PlayActivity
 import com.example.cressida.slidingpuzzleapp.views.RegisterActivity

@@ -1,15 +1,9 @@
-package com.example.cressida.slidingpuzzleapp.views
+package com.example.cressida.slidingpuzzleapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat.startActivity
 import android.content.Intent
 import android.os.Handler
-import android.support.v4.os.HandlerCompat.postDelayed
-import android.widget.Button
-import com.example.cressida.slidingpuzzleapp.LoginRegisterActivity
-import com.example.cressida.slidingpuzzleapp.R
-import java.util.*
 
 
 class IntroActivity : AppCompatActivity() {
