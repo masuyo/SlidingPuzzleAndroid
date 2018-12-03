@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">SlidingPuzzleApp</string>
+    <string name="app_name">SlidingPuzzle</string>
     <string name="title_activity_login_register">LoginRegisterActivity</string>
 </resources>
