@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.cressida.slidingpuzzleapp.MainActivity
 import com.example.cressida.slidingpuzzleapp.R
+import com.example.cressida.slidingpuzzleapp.SettingsActivity
 import kotlinx.android.synthetic.main.activity_play.*
 
 class PlayActivity : AppCompatActivity() {

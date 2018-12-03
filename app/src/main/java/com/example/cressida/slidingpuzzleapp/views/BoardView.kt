@@ -13,7 +13,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private val rows = 6
     private val columns = 6
-    private val scale = resources.displayMetrics.density*2
+    private val scale = resources.displayMetrics.density * 2
 
     private var height = 150 * scale
     private var width = 150 * scale
@@ -40,12 +40,12 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         generateColorsForRects()
     }
 
-    private var initialX:Float = (0).toFloat()
-    private var initialY:Float = (0).toFloat()
-    private var prevX:Float = (0).toFloat()
-    private var prevY:Float = (0).toFloat()
+    private var initialX: Float = (0).toFloat()
+    private var initialY: Float = (0).toFloat()
+    private var prevX: Float = (0).toFloat()
+    private var prevY: Float = (0).toFloat()
     private var rectIndex = 0
-    private val TAG:String = this::class.java.simpleName
+    private val TAG: String = this::class.java.simpleName
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
