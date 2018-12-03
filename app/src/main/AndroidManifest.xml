@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".IntroActivity"
             android:theme="@style/AppTheme.NoActionBar">
             >
             <intent-filter>
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".IntroActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".PlayActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".LevelActivity" />
