@@ -24,6 +24,10 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var purplePaint: Paint? = null
     private var bluePaint: Paint? = null
     private var greenPaint: Paint? = null
+    private val cPaint: Paint? = Paint()
+
+    private val commonColor: Paint? = null
+    private val finisherColor: Paint? = null
     //private var horizontalThreeImage: ImagePattern? = null
 
     private val blocksDummy = ArrayList<Block>()
@@ -35,6 +39,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         blocksDummy.add(Block(0, 0, 2, false))
         blocksDummy.add(Block(0, 1, 3, false))
         blocksDummy.add(Block(1, 2, 2, true))
+        blocksDummy.add(Block(4, 3, 2, false))
 
         generateRectsFromBlocks()
         generateColorsForRects()
@@ -108,7 +113,10 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private fun drawBlocks(canvas: Canvas) {
         for (i in 0 until blockRects.size) {
-            canvas!!.drawRect(blockRects[i], rectColors[i])
+            for (j in 0 until 2) {
+                generateFillThenStroke(j)
+                canvas!!.drawRect(blockRects[i], cPaint)
+            }
         }
     }
 
@@ -212,10 +220,32 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         bluePaint?.isAntiAlias = true
         greenPaint?.isAntiAlias = true
 
+
+        rectColors.add(purplePaint)
+        rectColors.add(bluePaint)
+        rectColors.add(greenPaint)
         rectColors.add(purplePaint)
         rectColors.add(bluePaint)
         rectColors.add(greenPaint)
 
+
+        cPaint?.isAntiAlias = true
+        cPaint?.style = Paint.Style.STROKE
+        cPaint?.color = Color.BLACK
+        cPaint?.strokeWidth = 5f
+
+    }
+
+    private fun generateFillThenStroke(i: Int) {
+        cPaint?.isAntiAlias = true
+        if (i == 0) {
+            cPaint?.style = Paint.Style.FILL
+            cPaint?.color = Color.BLACK
+        } else {
+            cPaint?.style = Paint.Style.STROKE
+            cPaint?.color = Color.RED
+            cPaint?.strokeWidth = 10f
+        }
     }
 
     // preserve a squared ratio
