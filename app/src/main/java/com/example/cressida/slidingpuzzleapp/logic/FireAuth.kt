@@ -50,6 +50,12 @@ class FireAuth(private val callerAct: Activity) : FireControl() {
     }
 
     fun loginUser(email: String, password: String, forwardAct: Activity) {
+
+        if (!validateForm(email, password)) {
+            Toast.makeText(callerAct, "Login failed.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(callerAct) { task ->
             if (task.isSuccessful) {
                 val intent = Intent(callerAct, forwardAct::class.java)
@@ -93,6 +99,20 @@ class FireAuth(private val callerAct: Activity) : FireControl() {
 
         if (TextUtils.isEmpty(username)) {
             valid = false;
+        }
+
+        return valid
+    }
+
+    private fun validateForm(email: String, password: String): Boolean {
+        var valid = true
+
+        if (TextUtils.isEmpty(email)) {
+            valid = false
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            valid = false
         }
 
         return valid

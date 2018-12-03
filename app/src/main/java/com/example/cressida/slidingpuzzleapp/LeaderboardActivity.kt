@@ -1,4 +1,4 @@
-package com.example.cressida.slidingpuzzleapp.views
+package com.example.cressida.slidingpuzzleapp
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity

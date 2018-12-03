@@ -1,5 +1,6 @@
 package com.example.cressida.slidingpuzzleapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
@@ -16,7 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        val intent = Intent(this, PlayActivity::class.java)
+        startActivity(intent)
 
     }
 

@@ -1,11 +1,8 @@
-package com.example.cressida.slidingpuzzleapp.views
+package com.example.cressida.slidingpuzzleapp
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.example.cressida.slidingpuzzleapp.MainActivity
-import com.example.cressida.slidingpuzzleapp.R
-import com.example.cressida.slidingpuzzleapp.SettingsActivity
 import com.example.cressida.slidingpuzzleapp.logic.FireAuth
 import kotlinx.android.synthetic.main.activity_play.*
 

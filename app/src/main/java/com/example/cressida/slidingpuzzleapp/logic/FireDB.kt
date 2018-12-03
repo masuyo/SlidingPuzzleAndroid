@@ -1,9 +1,7 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
-import android.app.Activity
-import android.support.v7.widget.RecyclerView
 import android.util.Log
-import com.example.cressida.slidingpuzzleapp.Model.LeaderboardData
+import com.example.cressida.slidingpuzzleapp.model.LeaderboardData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 

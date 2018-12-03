@@ -6,6 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.Block
 
 @Suppress("DEPRECATION")
@@ -21,45 +22,41 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val rowHeight = (height / rows).toInt()
     private val rowWidth = (width / columns).toInt()
 
-    private var purplePaint: Paint? = null
-    private var bluePaint: Paint? = null
-    private var greenPaint: Paint? = null
-    //private var horizontalThreeImage: ImagePattern? = null
-
     private val blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
-    private val rectColors = ArrayList<Paint?>()
+
+    private var horizontalTwoImg: Bitmap? = null
+    private var horizontalThreeImg: Bitmap? = null
+    private var verticalTwoImg: Bitmap? = null
+    private var verticalThreeImg: Bitmap? = null
+    private var finisherImg: Bitmap? = null
+
+    private var prevX: Float = (0).toFloat()
+    private var prevY: Float = (0).toFloat()
+    private var rectIndex = 0
 
     init {
 
         blocksDummy.add(Block(0, 0, 2, false))
         blocksDummy.add(Block(0, 1, 3, false))
         blocksDummy.add(Block(1, 2, 2, true))
+        blocksDummy.add(Block(4, 3, 2, false))
+
+        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.mipmap.horizontal_2)
+        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.mipmap.horizontal_3)
+        verticalTwoImg = BitmapFactory.decodeResource(resources, R.mipmap.vertical_2)
+        verticalThreeImg = BitmapFactory.decodeResource(resources, R.mipmap.vertical_3)
+        finisherImg = BitmapFactory.decodeResource(resources, R.mipmap.finisher)
 
         generateRectsFromBlocks()
-        generateColorsForRects()
     }
 
-    private var initialX: Float = (0).toFloat()
-    private var initialY: Float = (0).toFloat()
-    private var prevX: Float = (0).toFloat()
-    private var prevY: Float = (0).toFloat()
-    private var rectIndex = 0
-    private val TAG: String = this::class.java.simpleName
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
-        var touching: Boolean = false
-
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                initialX = event.x
-                initialY = event.y
-                prevX = initialX
-                prevY = initialY
-                rectIndex = getRectIndexFor(initialX, initialY)
-                touching = true
-                Log.d(TAG, ("DOWN: x: $initialX, y: $initialY"))
+                prevX = event.x
+                prevY = event.y
+                rectIndex = getRectIndexFor(prevX, prevY)
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -88,7 +85,6 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 prevY = actualY
             }
 
-            // it should call the logic for Block coordinate change
             MotionEvent.ACTION_UP -> {
 
             }
@@ -102,13 +98,25 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
         height = canvas!!.height.toFloat()
         width = canvas!!.width.toFloat()
-        //canvas!!.drawColor(Color.BLACK)
+
         drawBlocks(canvas)
     }
 
     private fun drawBlocks(canvas: Canvas) {
+        var blockImg: Bitmap? = null
         for (i in 0 until blockRects.size) {
-            canvas!!.drawRect(blockRects[i], rectColors[i])
+            if (blocksDummy[i].vertical) {
+                if (blocksDummy[i].size == 2)
+                    blockImg = verticalTwoImg
+                if (blocksDummy[i].size == 3)
+                    blockImg = verticalThreeImg
+            } else {
+                if (blocksDummy[i].size == 2)
+                    blockImg = horizontalTwoImg
+                if (blocksDummy[i].size == 3)
+                    blockImg = horizontalThreeImg
+            }
+            canvas.drawBitmap(blockImg, Rect(0, 0, blockImg!!.width, blockImg!!.height), blockRects[i], null)
         }
     }
 
@@ -118,7 +126,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         rect.left += diff.toInt()
         rect.right += diff.toInt()
 
-        if (!isRectIntersectsAnother(rect, rectIndex)) {
+        if (!rectIntersectsAnother(rect, rectIndex)) {
             blockRects[rectIndex].left += diff.toInt()
             blockRects[rectIndex].right += diff.toInt()
             invalidate(blockRects[rectIndex])
@@ -131,14 +139,14 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         rect.top += diff.toInt()
         rect.bottom += diff.toInt()
 
-        if (!isRectIntersectsAnother(rect, rectIndex)) {
+        if (!rectIntersectsAnother(rect, rectIndex)) {
             blockRects[rectIndex].top += diff.toInt()
             blockRects[rectIndex].bottom += diff.toInt()
             invalidate(blockRects[rectIndex])
         }
     }
 
-    private fun isRectIntersectsAnother(rect: Rect, rectIndex: Int): Boolean {
+    private fun rectIntersectsAnother(rect: Rect, rectIndex: Int): Boolean {
         for (i in 0 until blockRects.size) {
             if (i != rectIndex) {
                 if (rect.intersect(blockRects[i])) {
@@ -193,28 +201,6 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
             blockRects.add(rect)
         }
-
-    }
-
-    private fun generateColorsForRects() {
-
-        purplePaint = Paint()
-        bluePaint = Paint()
-        greenPaint = Paint()
-
-
-        purplePaint?.color = Color.MAGENTA
-        bluePaint?.color = Color.BLUE
-        greenPaint?.color = Color.GREEN
-
-
-        purplePaint?.isAntiAlias = true
-        bluePaint?.isAntiAlias = true
-        greenPaint?.isAntiAlias = true
-
-        rectColors.add(purplePaint)
-        rectColors.add(bluePaint)
-        rectColors.add(greenPaint)
 
     }
 

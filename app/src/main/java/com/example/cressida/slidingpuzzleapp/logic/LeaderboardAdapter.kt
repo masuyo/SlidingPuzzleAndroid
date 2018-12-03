@@ -1,13 +1,12 @@
 
 package com.example.cressida.slidingpuzzleapp.logic
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.cressida.slidingpuzzleapp.Model.LeaderboardData
+import com.example.cressida.slidingpuzzleapp.model.LeaderboardData
 import com.example.cressida.slidingpuzzleapp.R
 import kotlinx.android.synthetic.main.leaderboard_list_item.view.*
 
