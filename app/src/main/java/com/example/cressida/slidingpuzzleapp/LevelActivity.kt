@@ -2,6 +2,7 @@ package com.example.cressida.slidingpuzzleapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.cressida.slidingpuzzleapp.logic.Board
 import kotlinx.android.synthetic.main.activity_level.*
 
 class LevelActivity : AppCompatActivity() {
@@ -11,6 +12,7 @@ class LevelActivity : AppCompatActivity() {
         setContentView(R.layout.activity_level)
 
         var mapstring = intent.getStringExtra("map")
-        boardView.Load(mapstring)
+
+        boardView.Load(Board(mapstring))
     }
 }

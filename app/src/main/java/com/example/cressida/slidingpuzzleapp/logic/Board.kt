@@ -3,13 +3,16 @@ package com.example.cressida.slidingpuzzleapp.logic
 import android.content.Context.MODE_PRIVATE
 import kotlin.properties.Delegates
 
-class Board {
+class Board(mapstring: String) {
 
   /*  var IsEnded: Boolean by Delegates.observable(false) { _, oldValue, newValue ->
         onGameEnding?.invoke(oldValue, newValue)
     }
     var onGameEnding: ((Boolean, Boolean) -> Unit)? = null //akkor is jelez amikor false-ra vissza állítjuk
 */
+    init {
+      loadMap(mapstring)
+  }
 
     //private var size: Int = 0
     var minStep: Int =0
@@ -19,6 +22,7 @@ class Board {
     var table: ArrayList<com.example.cressida.slidingpuzzleapp.logic.Block> = ArrayList()
     private val pruposex = 5
     //private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
+
 
     fun loadMap(mapstring: String)
     {
@@ -45,7 +49,7 @@ class Board {
         }
     }
 
-    fun mozgat(block: Block,step: Int):Boolean
+    fun move(block: Block,step: Int):Boolean
     {
         if (block.vertical){
             block.y += step

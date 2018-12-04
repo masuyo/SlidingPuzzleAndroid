@@ -27,11 +27,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var greenPaint: Paint? = null
     //private var horizontalThreeImage: ImagePattern? = null
 
-    private val blocksDummy = ArrayList<Block>()
+    private var blocksDummy= ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
     private val rectColors = ArrayList<Paint?>()
 
-    private var board = Board()
+
 
     init {
 
@@ -39,11 +39,13 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         //blocksDummy.add(Block(0, 1, 3, false))
         //blocksDummy.add(Block(1, 2, 2, true))
     }
-public fun Load(stringMap: String)
+    fun Load(board: Board)
 {
+
+    blocksDummy = board.table
     //val stringMap =getTag(1).toString()
     //val stringMap = "7,0 0 2 false,0 1 3 false,1 2 2 true"
-    generateBlocksfromString(stringMap)
+
     generateRectsFromBlocks()
     generateColorsForRects()
 }
@@ -167,13 +169,7 @@ public fun Load(stringMap: String)
         }
         return -1
     }
-    private  fun generateBlocksfromString(stringmap: String){
-        board.loadMap(stringmap)
-        for ( block in board.table)
-        {
-            blocksDummy.add(block)
-        }
-    }
+
     private fun generateRectsFromBlocks() {
 
         var block: Block?
