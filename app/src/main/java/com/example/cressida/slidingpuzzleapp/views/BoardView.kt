@@ -4,7 +4,6 @@ import android.view.View
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.Block
@@ -42,11 +41,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         blocksDummy.add(Block(1, 2, 2, true))
         blocksDummy.add(Block(4, 3, 2, false))
 
-        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.mipmap.horizontal_2)
-        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.mipmap.horizontal_3)
-        verticalTwoImg = BitmapFactory.decodeResource(resources, R.mipmap.vertical_2)
-        verticalThreeImg = BitmapFactory.decodeResource(resources, R.mipmap.vertical_3)
-        finisherImg = BitmapFactory.decodeResource(resources, R.mipmap.finisher)
+        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
+        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
+        verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
+        verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
+        finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
 
         generateRectsFromBlocks()
     }
