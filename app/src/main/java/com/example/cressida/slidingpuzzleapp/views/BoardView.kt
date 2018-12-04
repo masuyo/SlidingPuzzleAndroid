@@ -4,10 +4,10 @@ import android.view.View
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.Block
+import com.example.cressida.slidingpuzzleapp.logic.Board
 
 @Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
@@ -22,7 +22,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val rowHeight = (height / rows).toInt()
     private val rowWidth = (width / columns).toInt()
 
-    private val blocksDummy = ArrayList<Block>()
+    private var blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
 
     private var horizontalTwoImg: Bitmap? = null
@@ -37,16 +37,18 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     init {
 
+
+
         blocksDummy.add(Block(0, 0, 2, false))
         blocksDummy.add(Block(0, 1, 3, false))
         blocksDummy.add(Block(1, 2, 2, true))
         blocksDummy.add(Block(4, 3, 2, false))
 
-        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.mipmap.horizontal_2)
-        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.mipmap.horizontal_3)
-        verticalTwoImg = BitmapFactory.decodeResource(resources, R.mipmap.vertical_2)
-        verticalThreeImg = BitmapFactory.decodeResource(resources, R.mipmap.vertical_3)
-        finisherImg = BitmapFactory.decodeResource(resources, R.mipmap.finisher)
+        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
+        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
+        verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
+        verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
+        finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
 
         generateRectsFromBlocks()
     }

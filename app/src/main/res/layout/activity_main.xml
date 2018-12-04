@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@mipmap/frame_background">
+    android:background="@drawable/frame_background">
 
 </android.support.constraint.ConstraintLayout>
