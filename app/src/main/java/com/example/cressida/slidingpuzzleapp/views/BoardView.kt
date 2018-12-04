@@ -4,9 +4,10 @@ import android.view.View
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
+import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.Block
+import com.example.cressida.slidingpuzzleapp.logic.Board
 
 @Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
