@@ -16,16 +16,16 @@ class Board {
     var actualStep: Int = 0
     private var minedge: Int = 0
     private var maxedge: Int = 0
-    private var table: ArrayList<com.example.cressida.slidingpuzzleapp.logic.Block> = ArrayList()
+    private var table: ArrayList<Block> = ArrayList()
     private val pruposex = 5
-    private val finiser: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block(0, 3, 2, false)
-    private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
+    private val finisher: Block = Block(0, 3, 2, false)
+    private var target: Block = Block()
     fun loadMap()
     {
         IsEnded = false
-        table.add(finiser)
+        table.add(finisher)
         minStep = 2
-        table.add(com.example.cressida.slidingpuzzleapp.logic.Block(3, 3, 3, true))
+        table.add(Block(3, 3, 3, true))
         setSize(size)
     }
     fun setSize(Size:Int )
@@ -40,12 +40,12 @@ class Board {
     }
     private fun isEnded()
     {
-        if (finiser.x + size -1 ==pruposex)
+        if (finisher.x + size -1 ==pruposex)
         {
             IsEnded = false
         }
     }
-    private  fun elementontablepoint(x: Int,y: Int): com.example.cressida.slidingpuzzleapp.logic.Block
+    private  fun elementontablepoint(x: Int,y: Int): Block
     {
         for ( i in 0 until table.size )
         {
@@ -62,7 +62,7 @@ class Board {
         }
         return com.example.cressida.slidingpuzzleapp.logic.Block()
     }
-    private fun elementInCordinate(x:Int,y:Int) : com.example.cressida.slidingpuzzleapp.logic.Block {
+    private fun elementInCordinate(x:Int,y:Int) : Block {
         val xp = x/sizerect
         val xy = y/sizerect
         return elementontablepoint(xp,xy)
@@ -73,7 +73,7 @@ class Board {
         {
             target.x= target.cordinateX/sizerect //pontositani ha van már alap megjelenités
             target.y = target.cordinateY/sizerect
-            target= com.example.cressida.slidingpuzzleapp.logic.Block()
+            target= Block()
             actualStep++
             //megjelenités modositása
             isEnded()

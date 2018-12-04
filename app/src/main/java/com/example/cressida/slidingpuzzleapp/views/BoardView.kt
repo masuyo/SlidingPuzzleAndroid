@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.Block
+import com.example.cressida.slidingpuzzleapp.logic.Board
 
 @Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
@@ -34,7 +35,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var prevY:Float = (0).toFloat()
     private var rectIndex = 0
 
+    private var board: Board? = null
+
     init {
+
+        board = Board()
 
         blocksDummy.add(Block(0, 0, 2, false))
         blocksDummy.add(Block(0, 1, 3, false))
