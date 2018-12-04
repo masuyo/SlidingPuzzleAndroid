@@ -17,10 +17,16 @@ class Board(mapstring: String) {
     //private var size: Int = 0
     var minStep: Int =0
     var actualStep: Int = 0
+    private var minedge: Int = 0
+    private var maxedge: Int = 0
+    private var table: ArrayList<Block> = ArrayList()
     //private var minedge: Int = 0
     //private var maxedge: Int = 0
     var table: ArrayList<com.example.cressida.slidingpuzzleapp.logic.Block> = ArrayList()
     private val pruposex = 5
+    private val finisher: Block = Block(0, 3, 2, false)
+    private var target: Block = Block()
+    fun loadMap()
     //private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
 
 
@@ -51,6 +57,11 @@ class Board(mapstring: String) {
 
     fun move(block: Block,step: Int):Boolean
     {
+        IsEnded = false
+        table.add(finisher)
+        minStep = 2
+        table.add(Block(3, 3, 3, true))
+        setSize(size)
         if (block.vertical){
             block.y += step
         }else{
@@ -74,12 +85,12 @@ class Board(mapstring: String) {
     }
     private fun isEnded()
     {
-        if (finiser.x + size -1 ==pruposex)
+        if (finisher.x + size -1 ==pruposex)
         {
             IsEnded = false
         }
     }
-    private  fun elementontablepoint(x: Int,y: Int): com.example.cressida.slidingpuzzleapp.logic.Block
+    private  fun elementontablepoint(x: Int,y: Int): Block
     {
         for ( i in 0 until table.size )
         {
@@ -96,7 +107,7 @@ class Board(mapstring: String) {
         }
         return com.example.cressida.slidingpuzzleapp.logic.Block()
     }
-    private fun elementInCordinate(x:Int,y:Int) : com.example.cressida.slidingpuzzleapp.logic.Block {
+    private fun elementInCordinate(x:Int,y:Int) : Block {
         val xp = x/sizerect
         val xy = y/sizerect
         return elementontablepoint(xp,xy)
@@ -107,7 +118,7 @@ class Board(mapstring: String) {
         {
             target.x= target.cordinateX/sizerect //pontositani ha van már alap megjelenités
             target.y = target.cordinateY/sizerect
-            target= com.example.cressida.slidingpuzzleapp.logic.Block()
+            target= Block()
             actualStep++
             //megjelenités modositása
             isEnded()
@@ -203,5 +214,5 @@ class Board(mapstring: String) {
                 }
             }
         }
-    }*/
+    }
 }
