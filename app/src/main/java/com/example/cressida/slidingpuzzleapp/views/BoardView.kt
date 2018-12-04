@@ -38,7 +38,6 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     init {
 
 
-
         blocksDummy.add(Block(0, 0, 2, false))
         blocksDummy.add(Block(0, 1, 3, false))
         blocksDummy.add(Block(1, 2, 2, true))

@@ -40,12 +40,13 @@ class Board {
     }
     private fun isEnded()
     {
-        if (finisher.x + size -1 ==pruposex)
+        if (finisher.x + size - 1 == pruposex)
         {
             IsEnded = false
         }
     }
-    private  fun elementontablepoint(x: Int,y: Int): Block
+
+    private fun elementontablepoint(x: Int, y: Int): Block
     {
         for ( i in 0 until table.size )
         {
@@ -62,7 +63,8 @@ class Board {
         }
         return com.example.cressida.slidingpuzzleapp.logic.Block()
     }
-    private fun elementInCordinate(x:Int,y:Int) : Block {
+
+    private fun elementInCordinate(x: Int, y: Int): Block {
         val xp = x/sizerect
         val xy = y/sizerect
         return elementontablepoint(xp,xy)
@@ -73,7 +75,7 @@ class Board {
         {
             target.x= target.cordinateX/sizerect //pontositani ha van már alap megjelenités
             target.y = target.cordinateY/sizerect
-            target= Block()
+            target = Block()
             actualStep++
             //megjelenités modositása
             isEnded()

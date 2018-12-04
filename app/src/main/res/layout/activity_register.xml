@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".RegisterActivity"
-    tools:showIn="@layout/activity_register">
+    tools:showIn="@layout/activity_register"
+    android:background="@drawable/theme">
 
     <EditText
         android:id="@+id/username"
@@ -31,6 +32,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="E-mail"
+        android:inputType="textEmailAddress"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +47,7 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,6 +64,7 @@
         android:layout_marginBottom="8dp"
         android:hint="Re-enter password"
         android:textAlignment="center"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
