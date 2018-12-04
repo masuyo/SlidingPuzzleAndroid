@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 
-class LevelselectActivity : AppCompatActivity() {
+class LevelSelectActivity : AppCompatActivity() {
 
     private val filename = "SlidingGameMaps"
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -22,6 +22,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".PlayActivity" />
+        <activity android:name=".LevelSelectActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".LevelActivity" />
         <activity
