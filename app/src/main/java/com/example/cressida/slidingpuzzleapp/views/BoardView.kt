@@ -22,7 +22,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val rowHeight = (height / rows).toInt()
     private val rowWidth = (width / columns).toInt()
 
-    private val blocksDummy = ArrayList<Block>()
+    private var blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
 
     private var horizontalTwoImg: Bitmap? = null
@@ -35,11 +35,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var prevY:Float = (0).toFloat()
     private var rectIndex = 0
 
-    private var board: Board? = null
-
     init {
 
-        board = Board()
+
 
         blocksDummy.add(Block(0, 0, 2, false))
         blocksDummy.add(Block(0, 1, 3, false))

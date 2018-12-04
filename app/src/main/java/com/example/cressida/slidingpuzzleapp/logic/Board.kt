@@ -16,7 +16,7 @@ class Board {
     var actualStep: Int = 0
     private var minedge: Int = 0
     private var maxedge: Int = 0
-    private var table: ArrayList<Block> = ArrayList()
+    var table: ArrayList<Block> = ArrayList()
     private val pruposex = 5
     private val finisher: Block = Block(0, 3, 2, false)
     private var target: Block = Block()
