@@ -24,7 +24,9 @@
         <activity android:name=".PlayActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".LevelActivity" />
-        <activity android:name=".LeaderboardActivity" />
+        <activity
+            android:name=".LeaderboardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
     </application>
 

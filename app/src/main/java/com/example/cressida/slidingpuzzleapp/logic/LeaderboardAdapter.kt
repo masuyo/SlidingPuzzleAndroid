@@ -1,6 +1,8 @@
 
 package com.example.cressida.slidingpuzzleapp.logic
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,6 +34,36 @@ class LeaderboardAdapter(var items: ArrayList<LeaderboardData>) : RecyclerView.A
         Log.e("asd", "onBindViewHolder called!")
         p0.view.tv_leaderboard_username.text = items.get(p1).username
         p0.view.tv_leaderboard_score.text = items.get(p1).highscore.toString()
+
+        when (p1) {
+            0 -> {
+                p0.view.setBackgroundResource(R.drawable.leaderboard_background_border_gold)
+                p0.view.tv_leaderboard_username.textSize = 30.0f
+                p0.view.tv_leaderboard_username.setTypeface(null, Typeface.BOLD)
+
+                p0.view.tv_leaderboard_score.textSize = 30.0f
+                p0.view.tv_leaderboard_score.setTypeface(null, Typeface.BOLD)
+
+            }
+
+            1 -> {
+                p0.view.setBackgroundResource(R.drawable.leaderboard_background_border_silver)
+                p0.view.tv_leaderboard_username.textSize = 27.0f
+                p0.view.tv_leaderboard_username.setTypeface(null, Typeface.BOLD)
+
+                p0.view.tv_leaderboard_score.textSize = 27.0f
+                p0.view.tv_leaderboard_score.setTypeface(null, Typeface.BOLD)
+            }
+
+            2 -> {
+                p0.view.setBackgroundResource(R.drawable.leaderboard_background_border_bronze)
+                p0.view.tv_leaderboard_username.textSize = 24.0f
+                p0.view.tv_leaderboard_username.setTypeface(null, Typeface.BOLD)
+
+                p0.view.tv_leaderboard_score.textSize = 24.0f
+                p0.view.tv_leaderboard_score.setTypeface(null, Typeface.BOLD)
+            }
+        }
 
     }
 

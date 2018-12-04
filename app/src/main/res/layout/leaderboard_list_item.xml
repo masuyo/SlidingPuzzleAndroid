@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout01"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_margin="5dp"
+    android:background="@drawable/leaderboard_background_border"
+    android:padding="10dp"
+    android:visibility="visible">
 
     <TextView
         android:id="@+id/tv_leaderboard_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:textSize="24dp"
+        tools:text="username" />
 
     <TextView
         android:id="@+id/tv_leaderboard_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/tv_leaderboard_username"
+        android:textSize="24dp"
         android:gravity="right" />
 
 </RelativeLayout>
