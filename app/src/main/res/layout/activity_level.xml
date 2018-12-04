@@ -8,6 +8,7 @@
 
     <com.example.cressida.slidingpuzzleapp.views.BoardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/boardView"/>
 
 </android.support.constraint.ConstraintLayout>

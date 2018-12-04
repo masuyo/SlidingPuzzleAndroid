@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.logic.Block
+import com.example.cressida.slidingpuzzleapp.logic.Board
 
 @Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
@@ -30,15 +31,22 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private val blockRects = ArrayList<Rect>()
     private val rectColors = ArrayList<Paint?>()
 
+    private var board = Board()
+
     init {
 
-        blocksDummy.add(Block(0, 0, 2, false))
-        blocksDummy.add(Block(0, 1, 3, false))
-        blocksDummy.add(Block(1, 2, 2, true))
-
-        generateRectsFromBlocks()
-        generateColorsForRects()
+        //blocksDummy.add(Block(0, 0, 2, false))
+        //blocksDummy.add(Block(0, 1, 3, false))
+        //blocksDummy.add(Block(1, 2, 2, true))
     }
+public fun Load(stringMap: String)
+{
+    //val stringMap =getTag(1).toString()
+    //val stringMap = "7,0 0 2 false,0 1 3 false,1 2 2 true"
+    generateBlocksfromString(stringMap)
+    generateRectsFromBlocks()
+    generateColorsForRects()
+}
 
     private var initialX:Float = (0).toFloat()
     private var initialY:Float = (0).toFloat()
@@ -159,7 +167,13 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         }
         return -1
     }
-
+    private  fun generateBlocksfromString(stringmap: String){
+        board.loadMap(stringmap)
+        for ( block in board.table)
+        {
+            blocksDummy.add(block)
+        }
+    }
     private fun generateRectsFromBlocks() {
 
         var block: Block?

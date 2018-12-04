@@ -13,7 +13,7 @@ class PlayActivity : AppCompatActivity() {
 
         var playB = findViewById<ImageView>(R.id.playButton)
         playB.setOnClickListener {
-            val intent = Intent( this, LevelActivity::class.java)
+            val intent = Intent( this, LevelselectActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,33 +1,63 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
+import android.content.Context.MODE_PRIVATE
 import kotlin.properties.Delegates
 
 class Board {
 
-    var IsEnded: Boolean by Delegates.observable(false) { _, oldValue, newValue ->
+  /*  var IsEnded: Boolean by Delegates.observable(false) { _, oldValue, newValue ->
         onGameEnding?.invoke(oldValue, newValue)
     }
     var onGameEnding: ((Boolean, Boolean) -> Unit)? = null //akkor is jelez amikor false-ra vissza állítjuk
+*/
 
-
-    private var size: Int = 0
-    var sizerect: Int = 0
+    //private var size: Int = 0
     var minStep: Int =0
     var actualStep: Int = 0
-    private var minedge: Int = 0
-    private var maxedge: Int = 0
-    private var table: ArrayList<com.example.cressida.slidingpuzzleapp.logic.Block> = ArrayList()
+    //private var minedge: Int = 0
+    //private var maxedge: Int = 0
+    var table: ArrayList<com.example.cressida.slidingpuzzleapp.logic.Block> = ArrayList()
     private val pruposex = 5
-    private val finiser: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block(0, 3, 2, false)
-    private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
-    fun loadMap()
+    //private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
+
+    fun loadMap(mapstring: String)
     {
-        IsEnded = false
-        table.add(finiser)
-        minStep = 2
-        table.add(com.example.cressida.slidingpuzzleapp.logic.Block(3, 3, 3, true))
-        setSize(size)
+        //   IsEnded = false
+         var map = mapstring.split(',')
+        try {
+            minStep = map[0].toInt()
+            for (i in 1 until  map.size)
+            {
+                var block = map[i].split(' ')
+               table.add( Block(
+                        block[0].toInt(),
+                        block[1].toInt(),
+                        block[2].toInt() ,
+                        block[3] == "true"
+                ))
+            }
+        }
+        catch (nfe: NumberFormatException){
+
+        }
+        catch (oii: IndexOutOfBoundsException){
+
+        }
     }
+
+    fun mozgat(block: Block,step: Int):Boolean
+    {
+        if (block.vertical){
+            block.y += step
+        }else{
+            block.x += step
+        }
+        actualStep++
+        if ( table[0].x == pruposex-1)
+            return true
+        return false
+    }
+    /*
     fun setSize(Size:Int )
     {
         size = Size
@@ -169,5 +199,5 @@ class Board {
                 }
             }
         }
-    }
+    }*/
 }
