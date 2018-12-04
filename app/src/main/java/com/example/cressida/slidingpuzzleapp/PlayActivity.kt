@@ -14,8 +14,9 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
-        playButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        var playB = findViewById<ImageView>(R.id.playButton)
+        playB.setOnClickListener {
+            val intent = Intent( this, LevelselectActivity::class.java)
             startActivity(intent)
         }
 

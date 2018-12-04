@@ -14,7 +14,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private val rows = 6
     private val columns = 6
-    private val scale = resources.displayMetrics.density * 2
+    private val scale = resources.displayMetrics.density*2
 
     private var height = 150 * scale
     private var width = 150 * scale
@@ -31,23 +31,27 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var verticalThreeImg: Bitmap? = null
     private var finisherImg: Bitmap? = null
 
-    private var prevX: Float = (0).toFloat()
-    private var prevY: Float = (0).toFloat()
+    private var prevX:Float = (0).toFloat()
+    private var prevY:Float = (0).toFloat()
     private var rectIndex = 0
 
+    private var board: Board? = null
+
     init {
-
-
-        blocksDummy.add(Block(0, 0, 2, false))
-        blocksDummy.add(Block(0, 1, 3, false))
-        blocksDummy.add(Block(1, 2, 2, true))
-        blocksDummy.add(Block(4, 3, 2, false))
 
         horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
         horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
         verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
         verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
         finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
+
+    }
+    fun Load(board: Board)
+{
+
+    blocksDummy = board.table
+    //val stringMap =getTag(1).toString()
+    //val stringMap = "7,0 0 2 false,0 1 3 false,1 2 2 true"
 
         generateRectsFromBlocks()
     }
@@ -117,7 +121,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 if (blocksDummy[i].size == 3)
                     blockImg = horizontalThreeImg
             }
-            canvas.drawBitmap(blockImg, Rect(0, 0, blockImg!!.width, blockImg!!.height), blockRects[i], null)
+            canvas.drawBitmap(blockImg, Rect(0,0,blockImg!!.width, blockImg!!.height), blockRects[i], null)
         }
     }
 
