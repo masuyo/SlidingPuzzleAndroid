@@ -38,7 +38,7 @@ class LevelActivity : AppCompatActivity(), Observer {
 
 
 
-       // val intent = Intent( this, LevelSelectActivity::class.java)
-       // startActivity(intent)
+/*        val intent = Intent( this, LevelSelectActivity::class.java)
+        startActivity(intent)*/
     }
 }

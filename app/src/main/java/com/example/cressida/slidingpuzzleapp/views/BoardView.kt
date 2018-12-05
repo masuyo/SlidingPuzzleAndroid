@@ -22,10 +22,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private val rowHeight = (height / rows).toInt()
     private val rowWidth = (width / columns).toInt()
-    private val padding = 2
+    private val padding = 3
 
     private var blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
+    private var exitRect: Rect = Rect()
 
     private var horizontalTwoImg: Bitmap? = null
     private var horizontalThreeImg: Bitmap? = null
@@ -38,22 +39,24 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var prevX: Float = (0).toFloat()
     private var prevY: Float = (0).toFloat()
     private var rectIndex = 0
+    private var board: Board? = null
 
     init {
 
-        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
-        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
-        verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
-        verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
-        finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
+        this.horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
+        this.horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
+        this.verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
+        this.verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
+        this.finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
 
     }
 
-    var board =  Board("0,2 2 0 false")
     fun load(board: Board) {
-         this.board = board
-        blocksDummy = board.table
-        generateRectsFromBlocks()
+
+        this.blocksDummy = board.table
+        this.board = board
+        this.generateRectsFromBlocks()
+        this.generateExit()
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -82,10 +85,19 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 prevX = event.x
                 prevY = event.y
 
-                if (rectIndex != -1) {
+/*                if (rectIndex != -1) {
                     this.checkForExtraMovementAndCallForIt()
-                    board.move()
+                }*/
+                if (rectIndex != -1) {
+                    if (rectIndex == 0) {
+                        if (finisherIntersectsWithExit()) {
+                            this.finish()
+                            this.board!!.gameOver()
+                        }
+                    }
+                    this.board!!.move()
                 }
+
 
             }
             else -> super.onTouchEvent(event)
@@ -96,10 +108,10 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        height = canvas!!.height.toFloat()
-        width = canvas!!.width.toFloat()
+        this.height = canvas!!.height.toFloat()
+        this.width = canvas!!.width.toFloat()
 
-        drawBlocks(canvas)
+        this.drawBlocks(canvas)
     }
 
     private fun drawBlocks(canvas: Canvas) {
@@ -119,6 +131,11 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             }
             canvas.drawBitmap(blockImg, Rect(0, 0, blockImg!!.width, blockImg!!.height), blockRects[i], null)
         }
+        //canvas.drawRect(exitRect, null)
+    }
+
+    private fun finish() {
+
     }
 
     private fun checkForExtraMovementAndCallForIt() {
@@ -150,6 +167,13 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             }
             this.checkForVerticalBoundariesAndCallForChange(extraMovement)
         }
+    }
+
+    private fun finisherIntersectsWithExit(): Boolean{
+        if (blockRects[0].intersect(exitRect)) {
+            return true
+        }
+        return false
     }
 
     private fun checkForVerticalAndCallForBoundaryCheck(actualX: Float, actualY: Float) {
@@ -224,6 +248,14 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             }
         }
         return -1
+    }
+
+    private fun generateExit() {
+        var left = board!!.exit.x * rowWidth  + padding
+        var bottom = (board!!.exit.y + board!!.exit.size) * rowHeight - padding
+        var right = (board!!.exit.x + 1) * rowWidth - padding
+        var top = board!!.exit.y * rowHeight + padding
+        exitRect = Rect(left, top, right, bottom)
     }
 
     private fun generateRectsFromBlocks() {
