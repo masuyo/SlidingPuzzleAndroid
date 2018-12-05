@@ -3,6 +3,7 @@ package com.example.cressida.slidingpuzzleapp
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.cressida.slidingpuzzleapp.logic.Board
 import kotlinx.android.synthetic.main.activity_level.*
 import java.util.*
@@ -43,6 +44,7 @@ class LevelActivity : AppCompatActivity(), Observer {
         board.addObserver(this)
         board.valueInit()
         board_view.load(board)
+        board_view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
 
 
