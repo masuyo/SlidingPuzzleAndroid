@@ -97,30 +97,37 @@ class FireDB {
         }
 
         private fun UpdateHighScore() {
-            val uDocument = db.collection("users").document("uid")
-            val uScores = uDocument.collection("levelscores")
+            val uDocument = db.collection("users").document(uid)
+            val uScores = db.collection("users").document(uid).collection("levelscores")
             var newScore: Double
-            var scores = ArrayList<Double>()
+
 
             uScores.get()
                     .addOnSuccessListener {
+
+                        var scores = ArrayList<Double>()
                         for (document in it) {
                             scores.add(document.getDouble("score")!!)
+
                         }
+
+                        newScore = 0.toDouble()
+
+                        for (item in scores) {
+                            newScore += item
+                        }
+
+                        Log.e("sum", newScore.toString())
+
+                        uDocument.update("highscore", newScore)
                     }
-
-            newScore = scores.sum()
-
-            uDocument.update("highscore", newScore)
         }
+
     }
 
     interface IFireCallback {
         fun ProcessData(data: ArrayList<LeaderboardData>)
     }
-
-
-
 
 
 }

@@ -1,12 +1,7 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
-import android.view.View.X
-import android.view.View.Y
-
 class Block {
 
-    var cordinateX = 0 //konstruktorbe megjeleni
-    var cordinateY = 0 //konstuktorba megjeleni
     var x:Int = 0
     var y: Int = 0
     var size:Int = -1
