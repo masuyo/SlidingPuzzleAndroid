@@ -49,12 +49,15 @@ class Board(mapstring: String) : Observable() {
     }
 
     fun gameOver() {
+
+        var point = ((minStep.toDouble()/actualStep.toDouble())*100).toInt()
+
         setChanged()
         notifyObservers(true)
     }
 
     fun move() {
-        
+
         actualStep++
         setChanged()
         notifyObservers(actualStep)
