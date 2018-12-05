@@ -128,7 +128,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             if  (distance < 0) {
                 distance = distance.absoluteValue
                 unitsTaken = distance.rem(rowHeight)
-                extraMovement = rowHeight - 2*unitsTaken
+                extraMovement = (0 - (rowHeight - unitsTaken))
             } else {
                 unitsTaken = distance.rem(rowHeight)
                 extraMovement = rowHeight - unitsTaken

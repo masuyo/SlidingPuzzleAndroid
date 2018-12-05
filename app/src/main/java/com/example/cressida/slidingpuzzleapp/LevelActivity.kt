@@ -1,5 +1,6 @@
 package com.example.cressida.slidingpuzzleapp
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.cressida.slidingpuzzleapp.logic.Board
@@ -14,5 +15,9 @@ class LevelActivity : AppCompatActivity() {
         var mapstring = intent.getStringExtra("map")
 
         board_view.load(Board(mapstring))
+
+
+        val intent = Intent( this, LevelSelectActivity::class.java)
+        startActivity(intent)
     }
 }

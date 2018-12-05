@@ -4,11 +4,12 @@ package com.example.cressida.slidingpuzzleapp.logic
 
 class Board(mapstring: String) {
 
-
+    
     var minStep: Int = 0
     var actualStep: Int = 0
     var table: ArrayList<Block> = ArrayList()
     private val pruposex = 5
+    val exit: Block = Block(5,2,1,false)
     init {
         loadMap(mapstring)
     }
@@ -39,17 +40,7 @@ class Board(mapstring: String) {
         }
     }
 
-    fun move(block: Block, step: Int): Boolean {
-
-        if (block.vertical) {
-            block.y += step
-        } else {
-            block.x += step
-        }
+    fun move() {
         actualStep++
-
-        if (table[0].x == pruposex - 1)
-            return true
-        return false
     }
 }
