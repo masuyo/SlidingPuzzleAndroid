@@ -1,10 +1,12 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
+import java.util.*
+import kotlin.properties.Delegates
 
 
-class Board(mapstring: String) {
+class Board(mapstring: String) : Observable() {
 
-    
+
     var minStep: Int = 0
     var actualStep: Int = 0
     var table: ArrayList<Block> = ArrayList()
@@ -39,8 +41,16 @@ class Board(mapstring: String) {
 
         }
     }
+    fun valueInit(){
+        setChanged()
+        notifyObservers((minStep).toLong())
+        setChanged()
+        notifyObservers(actualStep)
+    }
 
     fun move() {
         actualStep++
+        setChanged()
+        notifyObservers(actualStep)
     }
 }

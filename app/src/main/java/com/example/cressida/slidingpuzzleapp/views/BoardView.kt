@@ -49,8 +49,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     }
 
+    var board =  Board("0,2 2 0 false")
     fun load(board: Board) {
-
+         this.board = board
         blocksDummy = board.table
         generateRectsFromBlocks()
     }
@@ -83,6 +84,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
                 if (rectIndex != -1) {
                     this.checkForExtraMovementAndCallForIt()
+                    board.move()
                 }
 
             }
