@@ -204,7 +204,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         }
 
     }
-    
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(width.toInt(), height.toInt())
