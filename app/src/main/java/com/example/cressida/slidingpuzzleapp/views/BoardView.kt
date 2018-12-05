@@ -42,7 +42,6 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
         verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
         finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
-        ///jjjj
 
     }
 
@@ -205,11 +204,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         }
 
     }
-
-    // preserve a squared ratio
+    
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = measuredWidth
-        setMeasuredDimension(width, width)
+        setMeasuredDimension(width.toInt(), height.toInt())
     }
 }
