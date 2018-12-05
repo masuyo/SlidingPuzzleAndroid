@@ -2,12 +2,13 @@
 
     <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/myLayout"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/myLayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
 
-    android:background="@drawable/frame_background">
+    android:background="@drawable/basic_background">
 
     <TextView
         android:id="@+id/actualStep"
@@ -54,13 +55,21 @@
         android:text="0"
         android:textSize="12pt" />
 
-    <com.example.cressida.slidingpuzzleapp.views.BoardView
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/board_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        />
+        android:gravity="center"
+        android:background="@drawable/frameonly">
+
+        <com.example.cressida.slidingpuzzleapp.views.BoardView
+            android:id="@+id/board_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
