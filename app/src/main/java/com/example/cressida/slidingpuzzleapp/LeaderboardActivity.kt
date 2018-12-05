@@ -33,7 +33,7 @@ class LeaderboardActivity : AppCompatActivity(), FireDB.IFireCallback {
 
         var mDocRef = FirebaseFirestore.getInstance().collection("users")
 
-        fireDB.GetAllHighScore(this)
+        FireDB.GetAllHighScore(this)
 
 
     }
