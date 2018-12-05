@@ -49,10 +49,12 @@ class Board(mapstring: String) : Observable() {
     }
 
     fun gameOver() {
-
+        setChanged()
+        notifyObservers(true)
     }
 
     fun move() {
+        
         actualStep++
         setChanged()
         notifyObservers(actualStep)
