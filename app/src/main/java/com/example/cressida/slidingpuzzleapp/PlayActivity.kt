@@ -21,11 +21,6 @@ class PlayActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        settingsButton.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-        }
-
         leaderboardButton.setOnClickListener {
             val intent = Intent(this, LeaderboardActivity::class.java)
             startActivity(intent)
