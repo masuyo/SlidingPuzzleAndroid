@@ -40,6 +40,10 @@ class Board(mapstring: String) {
         }
     }
 
+    fun gameOver() {
+
+    }
+
     fun move() {
         actualStep++
     }
