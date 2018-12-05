@@ -82,20 +82,14 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             }
 
             MotionEvent.ACTION_UP -> {
-                prevX = event.x
-                prevY = event.y
 
-/*                if (rectIndex != -1) {
-                    this.checkForExtraMovementAndCallForIt()
-                }*/
                 if (rectIndex != -1) {
+                    this.board!!.move()
                     if (rectIndex == 0) {
                         if (finisherIntersectsWithExit()) {
                             this.finish()
-                            this.board!!.gameOver()
                         }
                     }
-                    this.board!!.move()
                 }
 
 
@@ -115,6 +109,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     }
 
     private fun drawBlocks(canvas: Canvas) {
+        var transPaint = Paint()
+        transPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        canvas.drawRect(exitRect, transPaint)
         var blockImg: Bitmap? = null
         canvas.drawBitmap(finisherImg, Rect(0, 0, finisherImg!!.width, finisherImg!!.height), blockRects[0], null)
         for (i in 1 until blockRects.size) {
@@ -131,43 +128,13 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             }
             canvas.drawBitmap(blockImg, Rect(0, 0, blockImg!!.width, blockImg!!.height), blockRects[i], null)
         }
-        //canvas.drawRect(exitRect, null)
+
     }
 
     private fun finish() {
-
+        this.board!!.gameOver()
     }
 
-    private fun checkForExtraMovementAndCallForIt() {
-        var distance:Float
-        var unitsTaken: Float
-        var extraMovement: Float
-        if (blocksDummy[rectIndex].vertical) {
-            distance = prevY - initialY
-            if  (distance < 0) {
-                distance = distance.absoluteValue
-                unitsTaken = distance.rem(rowHeight)
-                extraMovement = (0 - (rowHeight - unitsTaken))
-            } else {
-                unitsTaken = distance.rem(rowHeight)
-                extraMovement = rowHeight - unitsTaken
-
-            }
-            this.checkForHorizontalBoundariesAndCallForChange(extraMovement)
-        } else {
-            distance = prevX - initialX
-            if  (distance < 0) {
-                distance = distance.absoluteValue
-                unitsTaken = distance.rem(rowWidth)
-                extraMovement = rowWidth - 2*unitsTaken
-            } else {
-                unitsTaken = distance.rem(rowWidth)
-                extraMovement = rowWidth - unitsTaken
-
-            }
-            this.checkForVerticalBoundariesAndCallForChange(extraMovement)
-        }
-    }
 
     private fun finisherIntersectsWithExit(): Boolean{
         if (blockRects[0].intersect(exitRect)) {
