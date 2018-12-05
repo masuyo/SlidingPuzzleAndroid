@@ -22,8 +22,8 @@ class Board(mapstring: String) : Observable() {
         //   IsEnded = false
         var map = mapstring.split(',')
         try {
-            minStep = map[0].toInt()
-            mapName = map[1]
+            mapName = map[0]
+            minStep = map[1].toInt()
             for (i in 2 until map.size) {
                 var block = map[i].split(' ')
                 var vertical = false
