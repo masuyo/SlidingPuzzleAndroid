@@ -6,9 +6,9 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.R
-import com.example.cressida.slidingpuzzleapp.R.drawable.finisher
 import com.example.cressida.slidingpuzzleapp.logic.Block
 import com.example.cressida.slidingpuzzleapp.logic.Board
+import kotlin.math.absoluteValue
 
 @Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {
@@ -22,6 +22,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private val rowHeight = (height / rows).toInt()
     private val rowWidth = (width / columns).toInt()
+    private val padding = 2
 
     private var blocksDummy = ArrayList<Block>()
     private val blockRects = ArrayList<Rect>()
@@ -32,6 +33,8 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     private var verticalThreeImg: Bitmap? = null
     private var finisherImg: Bitmap? = null
 
+    private var initialX: Float = (0).toFloat()
+    private var initialY: Float = (0).toFloat()
     private var prevX: Float = (0).toFloat()
     private var prevY: Float = (0).toFloat()
     private var rectIndex = 0
@@ -55,8 +58,10 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                prevX = event.x
-                prevY = event.y
+                initialX = event.x
+                initialY = event.y
+                prevX = initialX
+                prevY = initialY
                 rectIndex = getRectIndexFor(prevX, prevY)
             }
 
@@ -66,27 +71,19 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 var actualY = event.y
 
                 if (rectIndex != -1) {
-                    if (blocksDummy[rectIndex].vertical) {
-                        var diff = actualY - prevY
-                        var staysWithinTopBoundary = (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0)
-                        var staysWithinBottomBoundary = (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height)
-                        if (staysWithinTopBoundary || staysWithinBottomBoundary) {
-                            this.checkForVerticalChangeAndInvalidate(diff)
-                        }
-                    } else {
-                        var diff = actualX - prevX
-                        var staysWithinLeftBoundary = (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width)
-                        var staysWithingRightBoundary = (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0)
-                        if (staysWithinLeftBoundary || staysWithingRightBoundary) {
-                            this.checkForHorizontalChangeAndInvalidate(diff)
-                        }
-                    }
+                    this.checkForVerticalAndCallForBoundaryCheck(actualX, actualY)
                 }
                 prevX = actualX
                 prevY = actualY
             }
 
             MotionEvent.ACTION_UP -> {
+                prevX = event.x
+                prevY = event.y
+
+                if (rectIndex != -1) {
+                    this.checkForExtraMovementAndCallForIt()
+                }
 
             }
             else -> super.onTouchEvent(event)
@@ -119,6 +116,63 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                     blockImg = horizontalThreeImg
             }
             canvas.drawBitmap(blockImg, Rect(0, 0, blockImg!!.width, blockImg!!.height), blockRects[i], null)
+        }
+    }
+
+    private fun checkForExtraMovementAndCallForIt() {
+        var distance:Float
+        var unitsTaken: Float
+        var extraMovement: Float
+        if (blocksDummy[rectIndex].vertical) {
+            distance = prevY - initialY
+            if  (distance < 0) {
+                distance = distance.absoluteValue
+                unitsTaken = distance.rem(rowHeight)
+                extraMovement = rowHeight - 2*unitsTaken
+            } else {
+                unitsTaken = distance.rem(rowHeight)
+                extraMovement = rowHeight - unitsTaken
+
+            }
+            this.checkForHorizontalBoundariesAndCallForChange(extraMovement)
+        } else {
+            distance = prevX - initialX
+            if  (distance < 0) {
+                distance = distance.absoluteValue
+                unitsTaken = distance.rem(rowWidth)
+                extraMovement = rowWidth - 2*unitsTaken
+            } else {
+                unitsTaken = distance.rem(rowWidth)
+                extraMovement = rowWidth - unitsTaken
+
+            }
+            this.checkForVerticalBoundariesAndCallForChange(extraMovement)
+        }
+    }
+
+    private fun checkForVerticalAndCallForBoundaryCheck(actualX: Float, actualY: Float) {
+        if (blocksDummy[rectIndex].vertical) {
+            var diff = actualY - prevY
+            this.checkForHorizontalBoundariesAndCallForChange(diff)
+        } else {
+            var diff = actualX - prevX
+            this.checkForVerticalBoundariesAndCallForChange(diff)
+        }
+    }
+
+    private fun checkForHorizontalBoundariesAndCallForChange(diff: Float) {
+        var staysWithinTopBoundary = (diff < 0 && blockRects[rectIndex].top + diff.toInt() > 0)
+        var staysWithinBottomBoundary = (diff > 0 && blockRects[rectIndex].bottom + diff.toInt() < height)
+        if (staysWithinTopBoundary || staysWithinBottomBoundary) {
+            this.checkForVerticalChangeAndInvalidate(diff)
+        }
+    }
+
+    private fun checkForVerticalBoundariesAndCallForChange(diff: Float) {
+        var staysWithinLeftBoundary = (diff > 0 && blockRects[rectIndex].right + diff.toInt() < width)
+        var staysWithingRightBoundary = (diff < 0 && blockRects[rectIndex].left + diff.toInt() > 0)
+        if (staysWithinLeftBoundary || staysWithingRightBoundary) {
+            this.checkForHorizontalChangeAndInvalidate(diff)
         }
     }
 
@@ -179,24 +233,23 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         var right: Int?
         var bottom: Int?
 
-        var step = 2
         for (i in 0 until blocksDummy.size) {
 
             block = blocksDummy[i]
 
             if (!block.vertical) {
 
-                left = block.x * rowWidth + step// X coordinate of the left side of the rectangle
-                bottom = (block.y + 1) * rowHeight - step// Y coordinate of the top of the rectangle
-                right = (block.x + block.size) * rowWidth - step // The X coordinate of the right side of the rectangle
-                top = block.y * rowHeight + step// Y coordinate of the bottom of the rectangle
+                left = block.x * rowWidth + padding// X coordinate of the left side of the rectangle
+                bottom = (block.y + 1) * rowHeight - padding// Y coordinate of the top of the rectangle
+                right = (block.x + block.size) * rowWidth - padding // The X coordinate of the right side of the rectangle
+                top = block.y * rowHeight + padding// Y coordinate of the bottom of the rectangle
 
             } else {
 
-                left = block.x * rowWidth  + step
-                bottom = (block.y + block.size) * rowHeight - step
-                right = (block.x + 1) * rowWidth - step
-                top = block.y * rowHeight + step
+                left = block.x * rowWidth  + padding
+                bottom = (block.y + block.size) * rowHeight - padding
+                right = (block.x + 1) * rowWidth - padding
+                top = block.y * rowHeight + padding
 
             }
             rect = Rect(left, top, right, bottom)
