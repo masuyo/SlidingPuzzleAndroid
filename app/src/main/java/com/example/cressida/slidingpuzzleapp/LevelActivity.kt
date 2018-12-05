@@ -13,6 +13,6 @@ class LevelActivity : AppCompatActivity() {
 
         var mapstring = intent.getStringExtra("map")
 
-        board_view.Load(Board(mapstring))
+        board_view.load(Board(mapstring))
     }
 }

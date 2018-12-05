@@ -45,12 +45,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     }
 
-    fun Load(board: Board) {
+    fun load(board: Board) {
 
         blocksDummy = board.table
-        //val stringMap =getTag(1).toString()
-        //val stringMap = "7,0 0 2 false,0 1 3 false,1 2 2 true"
-
         generateRectsFromBlocks()
     }
 
