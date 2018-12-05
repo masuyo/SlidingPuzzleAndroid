@@ -20,6 +20,14 @@ class LevelActivity : AppCompatActivity(), Observer {
             {
                optimalStepCount.text = arg.toString()
             }
+            if (arg is Boolean)
+            {
+                if (arg)
+                {
+                           val intent = Intent( this, LevelSelectActivity::class.java)
+         startActivity(intent)
+                }
+            }
         } }
     }
 
@@ -40,7 +48,5 @@ class LevelActivity : AppCompatActivity(), Observer {
 
 
 
-/*        val intent = Intent( this, LevelSelectActivity::class.java)
-        startActivity(intent)*/
     }
 }
