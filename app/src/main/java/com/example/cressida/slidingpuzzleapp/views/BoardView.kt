@@ -42,6 +42,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
         verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
         finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
+        ///jjjj
 
     }
 
