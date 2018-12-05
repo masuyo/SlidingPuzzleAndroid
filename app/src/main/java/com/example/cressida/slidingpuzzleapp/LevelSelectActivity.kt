@@ -16,31 +16,31 @@ class LevelSelectActivity : AppCompatActivity() {
         var playMap1 = findViewById<ImageView>(R.id.imageViewButton)
         playMap1.setOnClickListener {
             val intent = Intent( this, LevelActivity::class.java)
-            intent.putExtra("map",getMaps((1)))
+            intent.putExtra("map",getMaps(1))
             startActivity(intent)
         }
         var playMap2 = findViewById<ImageView>(R.id.imageViewButton2)
         playMap2.setOnClickListener {
             val intent = Intent( this, LevelActivity::class.java)
-            intent.putExtra("map",getMaps((2)))
+            intent.putExtra("map",getMaps(2))
             startActivity(intent)
         }
         var playMap3 = findViewById<ImageView>(R.id.imageViewButton3)
         playMap3.setOnClickListener {
             val intent = Intent( this, LevelActivity::class.java)
-            intent.putExtra("map",getMaps((3)))
+            intent.putExtra("map",getMaps(3))
             startActivity(intent)
         }
         var playMap4 = findViewById<ImageView>(R.id.imageViewButton4)
         playMap4.setOnClickListener {
             val intent = Intent( this, LevelActivity::class.java)
-            intent.putExtra("map",getMaps((4)))
+            intent.putExtra("map",getMaps(4))
             startActivity(intent)
         }
         var playMap5 = findViewById<ImageView>(R.id.imageViewButton5)
         playMap5.setOnClickListener {
             val intent = Intent( this, LevelActivity::class.java)
-            intent.putExtra("map",getMaps((5)))
+            intent.putExtra("map",getMaps(5))
             startActivity(intent)
         }
     }

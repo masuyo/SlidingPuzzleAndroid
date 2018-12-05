@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout
+    android:id="@+id/myLayout"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/frame_background">
 
-    <com.example.cressida.slidingpuzzleapp.views.BoardView
-        android:id="@+id/board_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+    <com.example.cressida.slidingpuzzleapp.views.BoardView
+        android:layout_centerVertical="true"
+        android:id="@+id/board_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="21dp"
+        android:layout_marginLeft="22dp"
+        />
+
+</RelativeLayout>

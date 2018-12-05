@@ -10,10 +10,6 @@ class Board(mapstring: String) {
     }
     var onGameEnding: ((Boolean, Boolean) -> Unit)? = null //akkor is jelez amikor false-ra vissza állítjuk
 */
-    init {
-        loadMap(mapstring)
-    }
-
     //private var size: Int = 0
     var minStep: Int = 0
     var actualStep: Int = 0
@@ -28,6 +24,11 @@ class Board(mapstring: String) {
     //private var target: com.example.cressida.slidingpuzzleapp.logic.Block = com.example.cressida.slidingpuzzleapp.logic.Block()
 
 
+    init {
+        loadMap(mapstring)
+    }
+
+
     fun loadMap(mapstring: String) {
         //   IsEnded = false
         var map = mapstring.split(',')
@@ -35,11 +36,15 @@ class Board(mapstring: String) {
             minStep = map[0].toInt()
             for (i in 1 until map.size) {
                 var block = map[i].split(' ')
+                var vertical = false
+                if (block[3] == "true")
+                    vertical = true
+
                 table.add(Block(
                         block[0].toInt(),
                         block[1].toInt(),
                         block[2].toInt(),
-                        block[3] == "true"
+                        vertical
                 ))
             }
         } catch (nfe: NumberFormatException) {
