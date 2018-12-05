@@ -49,7 +49,6 @@ class Board(mapstring: String) : Observable() {
     }
 
     fun gameOver() {
-
     }
 
     fun move() {
