@@ -177,6 +177,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         var right: Int?
         var bottom: Int?
 
+        var step = 1
 
         for (i in 0 until blocksDummy.size) {
 
@@ -184,20 +185,20 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
             if (!block.vertical) {
 
-                left = block.x * rowWidth // X coordinate of the left side of the rectangle
-                top = (block.y + 1) * rowHeight // Y coordinate of the top of the rectangle
-                right = (block.x + block.size) * rowWidth // The X coordinate of the right side of the rectangle
-                bottom = block.y * rowHeight // Y coordinate of the bottom of the rectangle
+                left = block.x * rowWidth + step// X coordinate of the left side of the rectangle
+                bottom = (block.y + 1) * rowHeight - step// Y coordinate of the top of the rectangle
+                right = (block.x + block.size) * rowWidth - step // The X coordinate of the right side of the rectangle
+                top = block.y * rowHeight + step// Y coordinate of the bottom of the rectangle
 
             } else {
 
-                left = block.x * rowWidth
-                top = (block.y + block.size) * rowHeight
-                right = (block.x + 1) * rowWidth
-                bottom = block.y * rowHeight
+                left = block.x * rowWidth  + step
+                bottom = (block.y + block.size) * rowHeight - step
+                right = (block.x + 1) * rowWidth - step
+                top = block.y * rowHeight + step
 
             }
-            rect = Rect(left, bottom, right, top)
+            rect = Rect(left, top, right, bottom)
 
             blockRects.add(rect)
         }
