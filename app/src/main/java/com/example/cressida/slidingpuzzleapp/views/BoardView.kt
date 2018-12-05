@@ -6,6 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.R
+import com.example.cressida.slidingpuzzleapp.R.drawable.finisher
 import com.example.cressida.slidingpuzzleapp.logic.Block
 import com.example.cressida.slidingpuzzleapp.logic.Board
 
@@ -104,7 +105,8 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     private fun drawBlocks(canvas: Canvas) {
         var blockImg: Bitmap? = null
-        for (i in 0 until blockRects.size) {
+        canvas.drawBitmap(finisherImg, Rect(0, 0, finisherImg!!.width, finisherImg!!.height), blockRects[0], null)
+        for (i in 1 until blockRects.size) {
             if (blocksDummy[i].vertical) {
                 if (blocksDummy[i].size == 2)
                     blockImg = verticalTwoImg
@@ -177,8 +179,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
         var right: Int?
         var bottom: Int?
 
-        var step = 1
-
+        var step = 2
         for (i in 0 until blocksDummy.size) {
 
             block = blocksDummy[i]
