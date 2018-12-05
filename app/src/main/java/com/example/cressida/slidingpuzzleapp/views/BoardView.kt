@@ -8,7 +8,6 @@ import android.view.MotionEvent
 import com.example.cressida.slidingpuzzleapp.R
 import com.example.cressida.slidingpuzzleapp.logic.Block
 import com.example.cressida.slidingpuzzleapp.logic.Board
-import kotlin.math.absoluteValue
 
 @Suppress("DEPRECATION")
 class BoardView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defstyleAttr: Int = 0) : View(context, attributeSet, defstyleAttr) {

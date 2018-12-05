@@ -1,7 +1,7 @@
 package com.example.cressida.slidingpuzzleapp.logic
 
 class Block {
-    
+
     var x:Int = 0
     var y: Int = 0
     var size:Int = -1
