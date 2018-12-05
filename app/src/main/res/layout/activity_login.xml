@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@drawable/theme"
+    android:background="@drawable/basic_background"
     >
 
     <EditText
@@ -17,6 +17,9 @@
         android:layout_marginEnd="8dp"
         android:hint="e-mail"
         android:inputType="textEmailAddress"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorBlack"
+        android:shadowColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +34,8 @@
         android:layout_marginEnd="8dp"
         android:hint="password"
         android:inputType="textPassword"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
