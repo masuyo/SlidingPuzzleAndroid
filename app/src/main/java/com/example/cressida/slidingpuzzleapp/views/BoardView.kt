@@ -41,18 +41,18 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
 
     init {
 
-        horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
-        horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
-        verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
-        verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
-        finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
+        this.horizontalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_2)
+        this.horizontalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.horizontal_3)
+        this.verticalTwoImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_2)
+        this.verticalThreeImg = BitmapFactory.decodeResource(resources, R.drawable.vertical_3)
+        this.finisherImg = BitmapFactory.decodeResource(resources, R.drawable.finisher)
 
     }
 
     fun load(board: Board) {
 
-        blocksDummy = board.table
-        generateRectsFromBlocks()
+        this.blocksDummy = board.table
+        this.generateRectsFromBlocks()
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -81,9 +81,9 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
                 prevX = event.x
                 prevY = event.y
 
-                if (rectIndex != -1) {
+/*                if (rectIndex != -1) {
                     this.checkForExtraMovementAndCallForIt()
-                }
+                }*/
 
             }
             else -> super.onTouchEvent(event)
@@ -128,7 +128,7 @@ class BoardView @JvmOverloads constructor(context: Context, attributeSet: Attrib
             if  (distance < 0) {
                 distance = distance.absoluteValue
                 unitsTaken = distance.rem(rowHeight)
-                extraMovement = rowHeight - 2*unitsTaken
+                extraMovement = (0 - (rowHeight - unitsTaken))
             } else {
                 unitsTaken = distance.rem(rowHeight)
                 extraMovement = rowHeight - unitsTaken

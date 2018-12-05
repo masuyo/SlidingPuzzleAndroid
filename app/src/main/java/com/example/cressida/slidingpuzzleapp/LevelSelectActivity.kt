@@ -9,6 +9,7 @@ import android.widget.ImageView
 class LevelSelectActivity : AppCompatActivity() {
 
     private val filename = "SlidingGameMaps"
+    private var fileupdate = true;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_levelselect)
@@ -50,17 +51,18 @@ class LevelSelectActivity : AppCompatActivity() {
         val editor = settings.edit()
         editor.putString("lvl1","7,0 2 2 false,0 1 2 false,1 3 3 false,2 4 2 true,3 4 3 false,4 0 3 true,5 0 3 true")
         editor.putString("lvl2","7,1 2 2 false,1 4 2 true,2 1 3 false,3 0 2 false,3 3 3 true,4 3 2 false,5 0 3 true")
-        editor.putString("lvl3","10,0 2 2 false,2 3 3 false,2 0 3 false,2 1 3 false,2 4 2 true,3 6 2 false,4 2 3 true")
+        editor.putString("lvl3","10,0 2 2 false,1 3 3 false,2 0 3 false,2 1 3 false,2 4 2 true,3 5 2 false,4 2 3 true")
         editor.putString("lvl4","10,0 2 2 false,1 0 3 false,1 1 2 false,1 3 3 false,2 4 2 true,3 4 2 true,4 0 3 true,4 5 2 false")
-        editor.putString("lvl5","15,0 2 2 false,0 3 1 false,0 4 3 false,0 5 2 false,2 0 3 true,2 3 2 false,3 4 2 true,4 1 2 false,4 5 2 false,5 2 3 true")
+        editor.putString("lvl5","15,0 2 2 false,0 3 2 false,0 4 3 false,0 5 2 false,2 0 3 true,2 3 2 false,3 4 2 true,4 1 2 false,4 5 2 false,5 2 3 true")
         editor.putBoolean("initialized",true)
         editor.apply()
+        fileupdate = false
     }
 
      fun getMaps(lvlnumber: Int ):String{
          val key = "lvl$lvlnumber"
          val settings = getSharedPreferences(filename, MODE_PRIVATE)
-         if (!settings.contains("initialized"))
+         if (!settings.contains("initialized") || fileupdate)
          {
              createMapsFile()
          }
