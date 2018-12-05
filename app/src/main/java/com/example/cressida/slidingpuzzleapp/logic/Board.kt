@@ -57,7 +57,6 @@ class Board(mapstring: String) : Observable() {
     }
 
     fun move() {
-
         actualStep++
         setChanged()
         notifyObservers(actualStep)
